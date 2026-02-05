@@ -33,4 +33,11 @@
 # In R studio, to start a new project: File> new project> version control>Git. In the repository URL, paste the URL of your new GitHub repository. 
 
 # Please explain the different data classes and how they are similar and different from each other.
-# 
+# Vector: A vector is a collection of values. It contains elements of the same type.To combine a list of items to a vector, use the c() function and separate the items by a comma. 
+# Dataframe: Data displayed in a format as a table.It can have different types of data inside it. It can be numeric or character. 
+# Matrix: it is a two dimentional data set with fixed number of columns and rows. 
+
+# Complete all tasks in an R script and push it to GitHub.
+z<- 1:200
+mean(z)
+sd(z)
