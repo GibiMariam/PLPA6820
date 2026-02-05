@@ -38,6 +38,38 @@
 # Matrix: it is a two dimentional data set with fixed number of columns and rows. 
 
 # Complete all tasks in an R script and push it to GitHub.
+# Create a vector named 'z' with the values 1 to 200
 z<- 1:200
+#o	Print the mean and standard deviation of z on the console
 mean(z)
 sd(z)
+# o	Create a logical vector named zlog that is 'TRUE' for z values greater than 30 and 'FALSE' otherwise.
+zlog <- z >30
+
+# Make a dataframe with z and zlog as columns. Name the dataframe zdf
+zdf <- data.frame(z,zlog)
+#	Change the column names in your new dataframe to equal “zvec” and “zlogic”
+colnames(zdf) <- c("zvec", "zlogic")
+# Make a new column in your dataframe equal to zvec squared (i.e., z2). Call the new column zsquared. 
+zdf$zsquared <- zdf$zvec^2
+# Subset the dataframe with and without the subset() function to only include values of zsquared greater than 10 and less than 100
+zdf_subset <- zdf[zdf$zsquared> 10 & zdf$zsquared <100,]
+print(zdf_subset)
+zdfsubset_function <-subset(zdf,zsquared >10 & zsquared <100)
+print (zdfsubset_function)
+#	Subset the zdf dataframe to only include the values on row 26
+zdf_row26 <- zdf[26,]
+print (zdf_row26)
+# Subset the zdf dataframe to only include the values in the column zsquared in the 180th row.
+zdf_zsquared_180 <- zdf$zsquared[180]
+print (zdf_zsquared_180)
+
+# Download the Tips.csv file from Canvas. Use the read.csv() function to read the data into R using a relative file path  and so that the missing values are properly coded. **Note the missing values are reported in the data as a period (i.e., “.”). How do you know the data were read correctly? 
+getwd()
+list.files()
+tipsR <- read.csv("TipsR.csv", na.strings = ".") # relative file path 
+str(tipsR) # this will tell us if the data is read correctly i.e., “.” Will appear as na. 
+
+
+
+
