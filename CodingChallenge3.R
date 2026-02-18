@@ -48,7 +48,9 @@ plot_DON <- ggplot(toxin.data, aes(x = Treatment, y = DON, fill = Cultivar)) +
               alpha = 0.6) +
   ylab("DON (ppm)") +
   xlab("") +
-  theme_classic()
+  theme_classic()+
+facet_wrap(~Cultivar)
+
 
 #Plot2:15ADON
 plot_15ADON <- ggplot(toxin.data, aes(x = Treatment, y = X15ADON, fill = Cultivar)) +
@@ -58,7 +60,9 @@ plot_15ADON <- ggplot(toxin.data, aes(x = Treatment, y = X15ADON, fill = Cultiva
               alpha = 0.6) +
   ylab("15ADON") +
   xlab("") +
-  theme_classic()
+  theme_classic() +
+  facet_wrap(~Cultivar)
+
 
 #Plot3:Seed mass
 plot_SeedMass <- ggplot(toxin.data, aes(x = Treatment, y = MassperSeed_mg, fill = Cultivar)) +
@@ -68,7 +72,9 @@ plot_SeedMass <- ggplot(toxin.data, aes(x = Treatment, y = MassperSeed_mg, fill 
               alpha = 0.6) +
   ylab("Seed Mass (mg)") +
   xlab("") +
-  theme_classic()
+  theme_classic()+
+  facet_wrap(~Cultivar)
+
 
 plot_15ADON
 plot_DON
