@@ -15,26 +15,40 @@ html_document:
 
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+`
+```{r R code example, include=TRUE, echo=FALSE}
+#this is R code.
+summary(mtcars)
+
+```
+```{r Include figures}
+library(ggplot2)
+data("mtcars")
+ggplot(mtcars,aes(x = wt, y= mpg)) +
+  geom_point()
+
 ```
 
-## R Markdown
+## R markdown formating options 
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+# First Level header
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+**this is italics** 
 
-```{r cars}
-summary(cars)
+1. one item
+2. another item
+- one subitem
+
+## Links
+[Link to my github](https://github.com/GibiMariam/PLPA6820/tree/main) 
+
+## Images
+![Shrek ggplot](shrek.jpg)
+## Formatted Tables
+
+```{r}
+library(knitr)
+kable(mtcars, digits = 3, format ="markdown")
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
