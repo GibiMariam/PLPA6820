@@ -1,6 +1,6 @@
 library(tidyverse)
+install.packages("ggpubr")
 library(ggpubr)
-library(ggrepel)
 install.packages("ggplot2")
 library(ggplot2)
 
@@ -91,57 +91,53 @@ combined_plot
 
 # common.legend=true would combine the legends avoiding duplicating it, it makes the image clearer
 # 5.Use geom_pwc() to add t.test pairwise comparisons to the three plots made above. Save each plot as a new R object, and combine them again with ggarange as you did in question 4. 
-#DON with pairwise comparison
-toxin.data$Treatment <- factor(toxin.data$Treatment)
-toxin.data$Cultivar <- factor(toxin.data$Cultivar)
-my_comparisons <- list(c("NTC", "Fg"), c("Fg", "Fg+35"), c("Fg+35", "Fg+70"))
-plot_DON_pwc <- ggplot(toxin.data,
-                       aes(x = Treatment, y = DON, fill = Cultivar)) +
-  geom_boxplot(position = position_dodge(width = 0.8)) +
-  geom_jitter(aes(color = Cultivar),
-              position = position_jitterdodge(),
-              alpha = 0.6) +
-  geom_pwc(method = "t.test",
-           label = "{p.adj.format}{p.adj.signif}", group.by = "Cultivar") +
-  ylab("DON (ppm)") +
-  xlab("") +
-  theme_classic()
 
-#15ADON with pairwise comparison
-plot_15ADON_pwc <- ggplot(toxin.data,
-                          aes(x = Treatment, y = X15ADON, fill = Cultivar)) +
+# DON Plot pairwise comparison
+plot_DON_pwc <- ggplot(toxin.data, aes(x = Treatment, y = DON, fill = Cultivar)) +
   geom_boxplot(position = position_dodge(width = 0.8)) +
-  geom_jitter(aes(color = Cultivar),
-              position = position_jitterdodge(),
-              alpha = 0.6) +
-  geom_pwc(method = "t.test",
-           label = "{p.adj.format}{p.adj.signif}", group.by = "Cultivar") +
-  ylab("15ADON") +
-  xlab("") +
-  theme_classic()
+  geom_jitter(shape = 21, color = "black", size = 1.5, stroke = 0.3,
+              position = position_jitterdodge(jitter.width = 0.2), alpha = 0.7) +
+  geom_pwc(aes(group = Treatment), method = "t.test", 
+           label = "{p.adj.format}{p.adj.signif}") +
+  ylab("DON (ppm)") + xlab("") + 
+  theme_classic() + 
+  facet_wrap(~Cultivar)
 
-#Seed mass with pairwise comparison
-plot_SeedMass_pwc <- ggplot(toxin.data,
-                            aes(x = Treatment, y = MassperSeed_mg, fill = Cultivar)) +
+# 15ADON Plot pairwise comparison
+plot_15ADON_pwc <- ggplot(toxin.data, aes(x = Treatment, y = X15ADON, fill = Cultivar)) +
   geom_boxplot(position = position_dodge(width = 0.8)) +
-  geom_jitter(aes(color = Cultivar),
-              position = position_jitterdodge(jitter.width = 0.2,
-                                              dodge.width = 0.8),
-              alpha = 0.6) +
-  geom_pwc(method = "t.test",
-           label = "{p.adj.format}{p.adj.signif}", group.by = "Cultivar") +
-  ylab("Seed Mass (mg)") +
-  xlab("") +
-  theme_classic()
+  geom_jitter(shape = 21, color = "black", size = 1.5, stroke = 0.3,
+              position = position_jitterdodge(jitter.width = 0.2), alpha = 0.7) +
+  geom_pwc(aes(group = Treatment), method = "t.test", 
+           label = "{p.adj.format}{p.adj.signif}") +
+  ylab("15ADON") + xlab("") + 
+  theme_classic() + 
+  facet_wrap(~Cultivar)
 
-#To combine them 
-combined_pwc <- ggarrange(plot_DON_pwc,plot_15ADON_pwc, plot_SeedMass_pwc,
-                          ncol = 3,
-                          nrow = 1,
-                          labels = c("A", "B", "C"),
+# Seed Mass Plot pairwise comparison
+plot_SeedMass_pwc <- ggplot(toxin.data, aes(x = Treatment, y = MassperSeed_mg, fill = Cultivar)) +
+  geom_boxplot(position = position_dodge(width = 0.8)) +
+  geom_jitter(shape = 21, color = "black", size = 1.5, stroke = 0.3,
+              position = position_jitterdodge(jitter.width = 0.2), alpha = 0.7) +
+  geom_pwc(aes(group= Treatment), method = "t.test", 
+           label = "{p.adj.format}{p.adj.signif}") +
+  ylab("Seed Mass (mg)") + xlab("") + 
+  theme_classic() + 
+  facet_wrap(~Cultivar, scales = "free_x")
+
+combined_pwc <- ggarrange(plot_DON_pwc, plot_15ADON_pwc, plot_SeedMass_pwc,
+                          ncol = 3, nrow = 1,
+                          labels = c("a", "b", "c"),
                           common.legend = TRUE,
-                          legend = "right")
-combined_plot
+                          legend = "top")
+
+combined_pwc 
+
+
+
+
+
+
 
 
 
