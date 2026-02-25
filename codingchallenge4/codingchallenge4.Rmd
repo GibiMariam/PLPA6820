@@ -7,14 +7,21 @@ output:
     toc: true
 ---
 Link to the article:https://doi.org/10.1094/PDIS-06-21-1253-RE
+
 # Question 1
+
 Question 1.Explain the following
+
 a.	YAML header
+
 A YAML header contains YAML arguments, such as “title”, “author”, and “output”, demarcated by three dashes (—) on either end.
+
 b.	Literate programming
+
 Literate programming is in essence to treat programming as writing human readable literature. The litr R package lets you write a complete R package in a single R markdown document. This enables a workflow for writing R packages that is probably very different from what you are used to.
 
 # Question 2
+
 Question 2. Take the code you wrote for coding challenge 3, question 5, and incorporate it into your R markdown file. Some of you have already been doing this, which is great! Your final R markdown file should have the following elements.
 a.	At the top of the document, make a clickable link to the manuscript where these data are published. The link is here:  
 Noel, Z.A., Roze, L.V., Breunig, M., Trail, F. 2022. Endophytic fungi as promising biocontrol agent to protect wheat from Fusarium graminearum head blight. Plant Disease. https://doi.org/10.1094/PDIS-06-21-1253-RE
