@@ -3,18 +3,18 @@ title: "Coding challenge_Rmarkdown"
 author: "Gibi Thomas"
 date: "2026-02-19"
 output:
-  html_document:
-    toc: true
-    toc_float: true
   word_document:
     toc: true
 ---
- Question 1.Explain the following
+Link to the article:https://doi.org/10.1094/PDIS-06-21-1253-RE
+# Question 1
+Question 1.Explain the following
 a.	YAML header
 A YAML header contains YAML arguments, such as “title”, “author”, and “output”, demarcated by three dashes (—) on either end.
 b.	Literate programming
 Literate programming is in essence to treat programming as writing human readable literature. The litr R package lets you write a complete R package in a single R markdown document. This enables a workflow for writing R packages that is probably very different from what you are used to.
 
+# Question 2
 Question 2. Take the code you wrote for coding challenge 3, question 5, and incorporate it into your R markdown file. Some of you have already been doing this, which is great! Your final R markdown file should have the following elements.
 a.	At the top of the document, make a clickable link to the manuscript where these data are published. The link is here:  
 Noel, Z.A., Roze, L.V., Breunig, M., Trail, F. 2022. Endophytic fungi as promising biocontrol agent to protect wheat from Fusarium graminearum head blight. Plant Disease. https://doi.org/10.1094/PDIS-06-21-1253-RE
@@ -26,8 +26,9 @@ library(ggpubr)
 #install.packages("ggplot2")
 library(ggplot2)
 ```
-
+# Plot_DON
 ```{r}
+
 cbbPalette  <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2" , "#D55E00", "#CC79A7")
 toxin.data <- read.csv("MycotoxinData.csv", na.strings = "na")
 plot_DON_pwc <- ggplot(toxin.data, aes(x = Treatment, y = DON, fill = Cultivar)) +
@@ -41,7 +42,10 @@ plot_DON_pwc <- ggplot(toxin.data, aes(x = Treatment, y = DON, fill = Cultivar))
   facet_wrap(~Cultivar)
 plot_DON_pwc
 ```
+
+# Plot 15ADON
 ```{r}
+
 plot_15ADON_pwc <- ggplot(toxin.data, aes(x = Treatment, y = X15ADON, fill = Cultivar)) +
   geom_boxplot(position = position_dodge(width = 0.8)) +
   geom_jitter(shape = 21, color = "black", size = 1.5, stroke = 0.3,
@@ -53,7 +57,10 @@ plot_15ADON_pwc <- ggplot(toxin.data, aes(x = Treatment, y = X15ADON, fill = Cul
   facet_wrap(~Cultivar)
 plot_15ADON_pwc
 ```
+
+# Plot_Seedmass
 ```{r}
+
 plot_SeedMass_pwc <- ggplot(toxin.data, aes(x = Treatment, y = MassperSeed_mg, fill = Cultivar)) +
   geom_boxplot(position = position_dodge(width = 0.8)) +
   geom_jitter(shape = 21, color = "black", size = 1.5, stroke = 0.3,
@@ -65,6 +72,8 @@ plot_SeedMass_pwc <- ggplot(toxin.data, aes(x = Treatment, y = MassperSeed_mg, f
   facet_wrap(~Cultivar)
 plot_SeedMass_pwc
 ```
+
+# PlotCombined
 ```{r}
 combined_pwc <- ggarrange(plot_DON_pwc, plot_15ADON_pwc, plot_SeedMass_pwc,
                           ncol = 3, nrow = 1,
