@@ -6,7 +6,13 @@ output:
   word_document:
     toc: true
 ---
-Link to the article:https://doi.org/10.1094/PDIS-06-21-1253-RE
+# DOI
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18790974.svg)](https://doi.org/10.5281/zenodo.18790974)
+
+## File Tree
+```{r}
+fs::dir_tree()
+```
 
 # Question 1
 
@@ -28,6 +34,8 @@ Noel, Z.A., Roze, L.V., Breunig, M., Trail, F. 2022. Endophytic fungi as promisi
 
 
 ```{r}
+#install.packages("fs")
+library(fs)
 #install.packages("ggpubr")
 library(ggpubr)
 #install.packages("ggplot2")
