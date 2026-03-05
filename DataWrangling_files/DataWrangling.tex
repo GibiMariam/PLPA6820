@@ -1,0 +1,1210 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Data Wrangling},
+  pdfauthor={Gibi Mariam Thomas},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Data Wrangling}
+\author{Gibi Mariam Thomas}
+\date{March 05, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'tidyverse' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'ggplot2' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'tidyr' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'purrr' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'dplyr' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'stringr' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'forcats' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{verbatim}
+## -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+## v dplyr     1.1.4     v readr     2.1.5
+## v forcats   1.0.1     v stringr   1.6.0
+## v ggplot2   4.0.2     v tibble    3.2.1
+## v lubridate 1.9.4     v tidyr     1.3.2
+## v purrr     1.2.1     
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+## i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{microbiome.fungi }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"C:/Users/My PC/OneDrive/문서/PLPA6820/Bull\_richness.csv"}\NormalTok{)}
+\FunctionTok{str}\NormalTok{(microbiome.fungi)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    287 obs. of  16 variables:
+##  $ SampleID       : chr  "Corn2017LeafObjective2Collection1T1R1CAH2" "Corn2017LeafObjective2Collection1T1R1CBA3" "Corn2017LeafObjective2Collection1T1R1CCB3" "Corn2017LeafObjective2Collection1T1R1FAC3" ...
+##  $ Crop           : chr  "Corn" "Corn" "Corn" "Corn" ...
+##  $ Objective      : chr  "Objective 2" "Objective 2" "Objective 2" "Objective 2" ...
+##  $ Collection     : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ Compartment    : chr  "Leaf" "Leaf" "Leaf" "Leaf" ...
+##  $ DateSampled    : chr  "6/26/17" "6/26/17" "6/26/17" "6/26/17" ...
+##  $ GrowthStage    : chr  "V6" "V6" "V6" "V6" ...
+##  $ Treatment      : chr  "Conv." "Conv." "Conv." "Conv." ...
+##  $ Rep            : chr  "R1" "R1" "R1" "R1" ...
+##  $ Sample         : chr  "A" "B" "C" "A" ...
+##  $ Fungicide      : chr  "C" "C" "C" "F" ...
+##  $ Target_organism: chr  "Fungi" "Fungi" "Fungi" "Fungi" ...
+##  $ Location       : chr  "Kellogg Biological Station" "Kellogg Biological Station" "Kellogg Biological Station" "Kellogg Biological Station" ...
+##  $ Experiment     : chr  "LTER" "LTER" "LTER" "LTER" ...
+##  $ Year           : int  2017 2017 2017 2017 2017 2017 2017 2017 2017 2017 ...
+##  $ richness       : int  9 6 5 7 4 2 3 8 4 4 ...
+\end{verbatim}
+
+\paragraph{\texorpdfstring{\texttt{select()}}{select()}}\label{select}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{microbiome.fungi2 }\OtherTok{\textless{}{-}} \FunctionTok{select}\NormalTok{(microbiome.fungi, SampleID, Crop, Compartment}\SpecialCharTok{:}\NormalTok{Fungicide, richness)}
+\FunctionTok{str}\NormalTok{(microbiome.fungi2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    287 obs. of  10 variables:
+##  $ SampleID   : chr  "Corn2017LeafObjective2Collection1T1R1CAH2" "Corn2017LeafObjective2Collection1T1R1CBA3" "Corn2017LeafObjective2Collection1T1R1CCB3" "Corn2017LeafObjective2Collection1T1R1FAC3" ...
+##  $ Crop       : chr  "Corn" "Corn" "Corn" "Corn" ...
+##  $ Compartment: chr  "Leaf" "Leaf" "Leaf" "Leaf" ...
+##  $ DateSampled: chr  "6/26/17" "6/26/17" "6/26/17" "6/26/17" ...
+##  $ GrowthStage: chr  "V6" "V6" "V6" "V6" ...
+##  $ Treatment  : chr  "Conv." "Conv." "Conv." "Conv." ...
+##  $ Rep        : chr  "R1" "R1" "R1" "R1" ...
+##  $ Sample     : chr  "A" "B" "C" "A" ...
+##  $ Fungicide  : chr  "C" "C" "C" "F" ...
+##  $ richness   : int  9 6 5 7 4 2 3 8 4 4 ...
+\end{verbatim}
+
+\paragraph{\texorpdfstring{\texttt{filter()}}{filter()}}\label{filter}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(}\FunctionTok{filter}\NormalTok{(microbiome.fungi2, Treatment }\SpecialCharTok{==} \StringTok{"Conv."}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                    SampleID Crop Compartment DateSampled
+## 1 Corn2017LeafObjective2Collection1T1R1CAH2 Corn        Leaf     6/26/17
+## 2 Corn2017LeafObjective2Collection1T1R1CBA3 Corn        Leaf     6/26/17
+## 3 Corn2017LeafObjective2Collection1T1R1CCB3 Corn        Leaf     6/26/17
+## 4 Corn2017LeafObjective2Collection1T1R1FAC3 Corn        Leaf     6/26/17
+## 5 Corn2017LeafObjective2Collection1T1R1FBD3 Corn        Leaf     6/26/17
+## 6 Corn2017LeafObjective2Collection1T1R1FCE3 Corn        Leaf     6/26/17
+##   GrowthStage Treatment Rep Sample Fungicide richness
+## 1          V6     Conv.  R1      A         C        9
+## 2          V6     Conv.  R1      B         C        6
+## 3          V6     Conv.  R1      C         C        5
+## 4          V6     Conv.  R1      A         F        7
+## 5          V6     Conv.  R1      B         F        4
+## 6          V6     Conv.  R1      C         F        2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(}\FunctionTok{filter}\NormalTok{(microbiome.fungi2, Treatment }\SpecialCharTok{==} \StringTok{"Conv."} \SpecialCharTok{\&}\NormalTok{ Fungicide }\SpecialCharTok{==} \StringTok{"C"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                    SampleID Crop Compartment DateSampled
+## 1 Corn2017LeafObjective2Collection1T1R1CAH2 Corn        Leaf     6/26/17
+## 2 Corn2017LeafObjective2Collection1T1R1CBA3 Corn        Leaf     6/26/17
+## 3 Corn2017LeafObjective2Collection1T1R1CCB3 Corn        Leaf     6/26/17
+## 4 Corn2017LeafObjective2Collection1T1R2CAF3 Corn        Leaf     6/26/17
+## 5 Corn2017LeafObjective2Collection1T1R2CBG3 Corn        Leaf     6/26/17
+## 6 Corn2017LeafObjective2Collection1T1R2CCH3 Corn        Leaf     6/26/17
+##   GrowthStage Treatment Rep Sample Fungicide richness
+## 1          V6     Conv.  R1      A         C        9
+## 2          V6     Conv.  R1      B         C        6
+## 3          V6     Conv.  R1      C         C        5
+## 4          V6     Conv.  R2      A         C        3
+## 5          V6     Conv.  R2      B         C        8
+## 6          V6     Conv.  R2      C         C        4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(}\FunctionTok{filter}\NormalTok{(microbiome.fungi2, Sample }\SpecialCharTok{==} \StringTok{"A"} \SpecialCharTok{|}\NormalTok{ Sample }\SpecialCharTok{==} \StringTok{"B"}\NormalTok{)) }\CommentTok{\# samples A or B}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                    SampleID Crop Compartment DateSampled
+## 1 Corn2017LeafObjective2Collection1T1R1CAH2 Corn        Leaf     6/26/17
+## 2 Corn2017LeafObjective2Collection1T1R1CBA3 Corn        Leaf     6/26/17
+## 3 Corn2017LeafObjective2Collection1T1R1FAC3 Corn        Leaf     6/26/17
+## 4 Corn2017LeafObjective2Collection1T1R1FBD3 Corn        Leaf     6/26/17
+## 5 Corn2017LeafObjective2Collection1T1R2CAF3 Corn        Leaf     6/26/17
+## 6 Corn2017LeafObjective2Collection1T1R2CBG3 Corn        Leaf     6/26/17
+##   GrowthStage Treatment Rep Sample Fungicide richness
+## 1          V6     Conv.  R1      A         C        9
+## 2          V6     Conv.  R1      B         C        6
+## 3          V6     Conv.  R1      A         F        7
+## 4          V6     Conv.  R1      B         F        4
+## 5          V6     Conv.  R2      A         C        3
+## 6          V6     Conv.  R2      B         C        8
+\end{verbatim}
+
+\paragraph{\texorpdfstring{\texttt{mutate()}}{mutate()}}\label{mutate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{microbiome.fungi2}\SpecialCharTok{$}\NormalTok{logRich }\OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(microbiome.fungi2}\SpecialCharTok{$}\NormalTok{richness) }
+\CommentTok{\# Create a new column called logRich}
+\FunctionTok{head}\NormalTok{(}\FunctionTok{mutate}\NormalTok{(microbiome.fungi2, }\AttributeTok{logRich =} \FunctionTok{log}\NormalTok{(richness)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                    SampleID Crop Compartment DateSampled
+## 1 Corn2017LeafObjective2Collection1T1R1CAH2 Corn        Leaf     6/26/17
+## 2 Corn2017LeafObjective2Collection1T1R1CBA3 Corn        Leaf     6/26/17
+## 3 Corn2017LeafObjective2Collection1T1R1CCB3 Corn        Leaf     6/26/17
+## 4 Corn2017LeafObjective2Collection1T1R1FAC3 Corn        Leaf     6/26/17
+## 5 Corn2017LeafObjective2Collection1T1R1FBD3 Corn        Leaf     6/26/17
+## 6 Corn2017LeafObjective2Collection1T1R1FCE3 Corn        Leaf     6/26/17
+##   GrowthStage Treatment Rep Sample Fungicide richness   logRich
+## 1          V6     Conv.  R1      A         C        9 2.1972246
+## 2          V6     Conv.  R1      B         C        6 1.7917595
+## 3          V6     Conv.  R1      C         C        5 1.6094379
+## 4          V6     Conv.  R1      A         F        7 1.9459101
+## 5          V6     Conv.  R1      B         F        4 1.3862944
+## 6          V6     Conv.  R1      C         F        2 0.6931472
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Creating a new column which combines Crop and Treatment }
+\FunctionTok{head}\NormalTok{(}\FunctionTok{mutate}\NormalTok{(microbiome.fungi2, }\AttributeTok{Crop\_Treatment =} \FunctionTok{paste}\NormalTok{(Crop, Treatment)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                    SampleID Crop Compartment DateSampled
+## 1 Corn2017LeafObjective2Collection1T1R1CAH2 Corn        Leaf     6/26/17
+## 2 Corn2017LeafObjective2Collection1T1R1CBA3 Corn        Leaf     6/26/17
+## 3 Corn2017LeafObjective2Collection1T1R1CCB3 Corn        Leaf     6/26/17
+## 4 Corn2017LeafObjective2Collection1T1R1FAC3 Corn        Leaf     6/26/17
+## 5 Corn2017LeafObjective2Collection1T1R1FBD3 Corn        Leaf     6/26/17
+## 6 Corn2017LeafObjective2Collection1T1R1FCE3 Corn        Leaf     6/26/17
+##   GrowthStage Treatment Rep Sample Fungicide richness   logRich Crop_Treatment
+## 1          V6     Conv.  R1      A         C        9 2.1972246     Corn Conv.
+## 2          V6     Conv.  R1      B         C        6 1.7917595     Corn Conv.
+## 3          V6     Conv.  R1      C         C        5 1.6094379     Corn Conv.
+## 4          V6     Conv.  R1      A         F        7 1.9459101     Corn Conv.
+## 5          V6     Conv.  R1      B         F        4 1.3862944     Corn Conv.
+## 6          V6     Conv.  R1      C         F        2 0.6931472     Corn Conv.
+\end{verbatim}
+
+\paragraph{\texorpdfstring{the pipe
+\texttt{\%\textgreater{}\%}}{the pipe \%\textgreater\%}}\label{the-pipe}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{select}\NormalTok{(microbiome.fungi, SampleID, Crop, Compartment}\SpecialCharTok{:}\NormalTok{Fungicide, richness) }\CommentTok{\# before}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                       SampleID Crop Compartment DateSampled
+## 1    Corn2017LeafObjective2Collection1T1R1CAH2 Corn        Leaf     6/26/17
+## 2    Corn2017LeafObjective2Collection1T1R1CBA3 Corn        Leaf     6/26/17
+## 3    Corn2017LeafObjective2Collection1T1R1CCB3 Corn        Leaf     6/26/17
+## 4    Corn2017LeafObjective2Collection1T1R1FAC3 Corn        Leaf     6/26/17
+## 5    Corn2017LeafObjective2Collection1T1R1FBD3 Corn        Leaf     6/26/17
+## 6    Corn2017LeafObjective2Collection1T1R1FCE3 Corn        Leaf     6/26/17
+## 7    Corn2017LeafObjective2Collection1T1R2CAF3 Corn        Leaf     6/26/17
+## 8    Corn2017LeafObjective2Collection1T1R2CBG3 Corn        Leaf     6/26/17
+## 9    Corn2017LeafObjective2Collection1T1R2CCH3 Corn        Leaf     6/26/17
+## 10   Corn2017LeafObjective2Collection1T1R2FAA4 Corn        Leaf     6/26/17
+## 11   Corn2017LeafObjective2Collection1T1R2FBB4 Corn        Leaf     6/26/17
+## 12   Corn2017LeafObjective2Collection1T1R2FCC4 Corn        Leaf     6/26/17
+## 13   Corn2017LeafObjective2Collection1T1R5CAD4 Corn        Leaf     6/26/17
+## 14   Corn2017LeafObjective2Collection1T1R5CBE4 Corn        Leaf     6/26/17
+## 15   Corn2017LeafObjective2Collection1T1R5CCF4 Corn        Leaf     6/26/17
+## 16   Corn2017LeafObjective2Collection1T1R5FAG4 Corn        Leaf     6/26/17
+## 17   Corn2017LeafObjective2Collection1T1R5FBH4 Corn        Leaf     6/26/17
+## 18   Corn2017LeafObjective2Collection1T1R5FCA5 Corn        Leaf     6/26/17
+## 19   Corn2017LeafObjective2Collection1T1R6CAB5 Corn        Leaf     6/26/17
+## 20   Corn2017LeafObjective2Collection1T1R6CBC5 Corn        Leaf     6/26/17
+## 21   Corn2017LeafObjective2Collection1T1R6CCD5 Corn        Leaf     6/26/17
+## 22   Corn2017LeafObjective2Collection1T1R6FAE5 Corn        Leaf     6/26/17
+## 23   Corn2017LeafObjective2Collection1T1R6FBF5 Corn        Leaf     6/26/17
+## 24   Corn2017LeafObjective2Collection1T1R6FCG5 Corn        Leaf     6/26/17
+## 25   Corn2017LeafObjective2Collection1T2R1CAH5 Corn        Leaf     6/26/17
+## 26   Corn2017LeafObjective2Collection1T2R1CBA6 Corn        Leaf     6/26/17
+## 27   Corn2017LeafObjective2Collection1T2R1CCB6 Corn        Leaf     6/26/17
+## 28   Corn2017LeafObjective2Collection1T2R1FAC6 Corn        Leaf     6/26/17
+## 29   Corn2017LeafObjective2Collection1T2R1FBE6 Corn        Leaf     6/26/17
+## 30   Corn2017LeafObjective2Collection1T2R1FCD6 Corn        Leaf     6/26/17
+## 31   Corn2017LeafObjective2Collection1T2R2CAF6 Corn        Leaf     6/26/17
+## 32   Corn2017LeafObjective2Collection1T2R2CBG6 Corn        Leaf     6/26/17
+## 33   Corn2017LeafObjective2Collection1T2R2CCH6 Corn        Leaf     6/26/17
+## 34   Corn2017LeafObjective2Collection1T2R2FAA7 Corn        Leaf     6/26/17
+## 35   Corn2017LeafObjective2Collection1T2R2FBB7 Corn        Leaf     6/26/17
+## 36   Corn2017LeafObjective2Collection1T2R2FCC7 Corn        Leaf     6/26/17
+## 37   Corn2017LeafObjective2Collection1T2R5CAD7 Corn        Leaf     6/26/17
+## 38   Corn2017LeafObjective2Collection1T2R5CBE7 Corn        Leaf     6/26/17
+## 39   Corn2017LeafObjective2Collection1T2R5CCF7 Corn        Leaf     6/26/17
+## 40   Corn2017LeafObjective2Collection1T2R5FAG7 Corn        Leaf     6/26/17
+## 41   Corn2017LeafObjective2Collection1T2R5FBH7 Corn        Leaf     6/26/17
+## 42   Corn2017LeafObjective2Collection1T2R5FCA8 Corn        Leaf     6/26/17
+## 43   Corn2017LeafObjective2Collection1T2R6CAB8 Corn        Leaf     6/26/17
+## 44   Corn2017LeafObjective2Collection1T2R6CBC8 Corn        Leaf     6/26/17
+## 45   Corn2017LeafObjective2Collection1T2R6CCD8 Corn        Leaf     6/26/17
+## 46   Corn2017LeafObjective2Collection1T2R6FAE8 Corn        Leaf     6/26/17
+## 47   Corn2017LeafObjective2Collection1T2R6FBF8 Corn        Leaf     6/26/17
+## 48   Corn2017LeafObjective2Collection1T2R6FCG8 Corn        Leaf     6/26/17
+## 49   Corn2017LeafObjective2Collection2T1R1CAC9 Corn        Leaf      7/5/17
+## 50   Corn2017LeafObjective2Collection2T1R1CBD9 Corn        Leaf      7/5/17
+## 51   Corn2017LeafObjective2Collection2T1R1CCE9 Corn        Leaf      7/5/17
+## 52   Corn2017LeafObjective2Collection2T1R1FAH8 Corn        Leaf      7/5/17
+## 53   Corn2017LeafObjective2Collection2T1R1FBA9 Corn        Leaf      7/5/17
+## 54   Corn2017LeafObjective2Collection2T1R1FCB9 Corn        Leaf      7/5/17
+## 55  Corn2017LeafObjective2Collection2T1R2CAA10 Corn        Leaf      7/5/17
+## 56  Corn2017LeafObjective2Collection2T1R2CBC10 Corn        Leaf      7/5/17
+## 57  Corn2017LeafObjective2Collection2T1R2CCD10 Corn        Leaf      7/5/17
+## 58   Corn2017LeafObjective2Collection2T1R2FAF9 Corn        Leaf      7/5/17
+## 59   Corn2017LeafObjective2Collection2T1R2FBG9 Corn        Leaf      7/5/17
+## 60   Corn2017LeafObjective2Collection2T1R2FCH9 Corn        Leaf      7/5/17
+## 61  Corn2017LeafObjective2Collection2T1R5CAH10 Corn        Leaf      7/5/17
+## 62  Corn2017LeafObjective2Collection2T1R5CBA11 Corn        Leaf      7/5/17
+## 63  Corn2017LeafObjective2Collection2T1R5CCC11 Corn        Leaf      7/5/17
+## 64  Corn2017LeafObjective2Collection2T1R5FAE10 Corn        Leaf      7/5/17
+## 65  Corn2017LeafObjective2Collection2T1R5FBF10 Corn        Leaf      7/5/17
+## 66  Corn2017LeafObjective2Collection2T1R5FCG10 Corn        Leaf      7/5/17
+## 67  Corn2017LeafObjective2Collection2T1R6CAB11 Corn        Leaf      7/5/17
+## 68  Corn2017LeafObjective2Collection2T1R6CBG11 Corn        Leaf      7/5/17
+## 69  Corn2017LeafObjective2Collection2T1R6CCH11 Corn        Leaf      7/5/17
+## 70  Corn2017LeafObjective2Collection2T1R6FAD11 Corn        Leaf      7/5/17
+## 71  Corn2017LeafObjective2Collection2T1R6FBE11 Corn        Leaf      7/5/17
+## 72  Corn2017LeafObjective2Collection2T1R6FCF11 Corn        Leaf      7/5/17
+## 73  Corn2017LeafObjective2Collection2T2R1CAD12 Corn        Leaf      7/5/17
+## 74  Corn2017LeafObjective2Collection2T2R1CBE12 Corn        Leaf      7/5/17
+## 75  Corn2017LeafObjective2Collection2T2R1CCF12 Corn        Leaf      7/5/17
+## 76  Corn2017LeafObjective2Collection2T2R1FAA12 Corn        Leaf      7/5/17
+## 77  Corn2017LeafObjective2Collection2T2R1FBB12 Corn        Leaf      7/5/17
+## 78  Corn2017LeafObjective2Collection2T2R1FCC12 Corn        Leaf      7/5/17
+## 79   Corn2017LeafObjective2Collection2T2R2CAB1 Corn        Leaf      7/5/17
+## 80   Corn2017LeafObjective2Collection2T2R2CBC1 Corn        Leaf      7/5/17
+## 81   Corn2017LeafObjective2Collection2T2R2CCD1 Corn        Leaf      7/5/17
+## 82  Corn2017LeafObjective2Collection2T2R2FAG12 Corn        Leaf      7/5/17
+## 83  Corn2017LeafObjective2Collection2T2R2FBH12 Corn        Leaf      7/5/17
+## 84   Corn2017LeafObjective2Collection2T2R2FCA1 Corn        Leaf      7/5/17
+## 85   Corn2017LeafObjective2Collection2T2R5CAH1 Corn        Leaf      7/5/17
+## 86   Corn2017LeafObjective2Collection2T2R5CBA2 Corn        Leaf      7/5/17
+## 87   Corn2017LeafObjective2Collection2T2R5CCB2 Corn        Leaf      7/5/17
+## 88   Corn2017LeafObjective2Collection2T2R5FAE1 Corn        Leaf      7/5/17
+## 89   Corn2017LeafObjective2Collection2T2R5FBF1 Corn        Leaf      7/5/17
+## 90   Corn2017LeafObjective2Collection2T2R5FCG1 Corn        Leaf      7/5/17
+## 91   Corn2017LeafObjective2Collection2T2R6CAF2 Corn        Leaf      7/5/17
+## 92   Corn2017LeafObjective2Collection2T2R6CBG2 Corn        Leaf      7/5/17
+## 93   Corn2017LeafObjective2Collection2T2R6CCH2 Corn        Leaf      7/5/17
+## 94   Corn2017LeafObjective2Collection2T2R6FAC2 Corn        Leaf      7/5/17
+## 95   Corn2017LeafObjective2Collection2T2R6FBD2 Corn        Leaf      7/5/17
+## 96   Corn2017LeafObjective2Collection2T2R6FCE2 Corn        Leaf      7/5/17
+## 97   Corn2017LeafObjective2Collection3T1R1CAA3 Corn        Leaf     7/31/17
+## 98   Corn2017LeafObjective2Collection3T1R1CBB3 Corn        Leaf     7/31/17
+## 99   Corn2017LeafObjective2Collection3T1R1CCC3 Corn        Leaf     7/31/17
+## 100  Corn2017LeafObjective2Collection3T1R1FAD3 Corn        Leaf     7/31/17
+## 101  Corn2017LeafObjective2Collection3T1R1FBE3 Corn        Leaf     7/31/17
+## 102  Corn2017LeafObjective2Collection3T1R1FCF3 Corn        Leaf     7/31/17
+## 103  Corn2017LeafObjective2Collection3T1R2CAG3 Corn        Leaf     7/31/17
+## 104  Corn2017LeafObjective2Collection3T1R2CBH3 Corn        Leaf     7/31/17
+## 105  Corn2017LeafObjective2Collection3T1R2CCA4 Corn        Leaf     7/31/17
+## 106  Corn2017LeafObjective2Collection3T1R2FAB4 Corn        Leaf     7/31/17
+## 107  Corn2017LeafObjective2Collection3T1R2FBC4 Corn        Leaf     7/31/17
+## 108  Corn2017LeafObjective2Collection3T1R2FCD4 Corn        Leaf     7/31/17
+## 109  Corn2017LeafObjective2Collection3T1R5CAE4 Corn        Leaf     7/31/17
+## 110  Corn2017LeafObjective2Collection3T1R5CBF4 Corn        Leaf     7/31/17
+## 111  Corn2017LeafObjective2Collection3T1R5CCG4 Corn        Leaf     7/31/17
+## 112  Corn2017LeafObjective2Collection3T1R5FAH4 Corn        Leaf     7/31/17
+## 113  Corn2017LeafObjective2Collection3T1R5FBA5 Corn        Leaf     7/31/17
+## 114  Corn2017LeafObjective2Collection3T1R5FCB5 Corn        Leaf     7/31/17
+## 115  Corn2017LeafObjective2Collection3T1R6CAC5 Corn        Leaf     7/31/17
+## 116  Corn2017LeafObjective2Collection3T1R6CBD5 Corn        Leaf     7/31/17
+## 117  Corn2017LeafObjective2Collection3T1R6CCE5 Corn        Leaf     7/31/17
+## 118  Corn2017LeafObjective2Collection3T1R6FAF5 Corn        Leaf     7/31/17
+## 119  Corn2017LeafObjective2Collection3T1R6FBG5 Corn        Leaf     7/31/17
+## 120  Corn2017LeafObjective2Collection3T1R6FCH5 Corn        Leaf     7/31/17
+## 121  Corn2017LeafObjective2Collection3T2R1CAB6 Corn        Leaf     7/31/17
+## 122  Corn2017LeafObjective2Collection3T2R1CBC6 Corn        Leaf     7/31/17
+## 123  Corn2017LeafObjective2Collection3T2R1CCD6 Corn        Leaf     7/31/17
+## 124  Corn2017LeafObjective2Collection3T2R1FAE6 Corn        Leaf     7/31/17
+## 125  Corn2017LeafObjective2Collection3T2R1FBF6 Corn        Leaf     7/31/17
+## 126  Corn2017LeafObjective2Collection3T2R1FCG6 Corn        Leaf     7/31/17
+## 127  Corn2017LeafObjective2Collection3T2R2CAH6 Corn        Leaf     7/31/17
+## 128  Corn2017LeafObjective2Collection3T2R2CBA7 Corn        Leaf     7/31/17
+## 129  Corn2017LeafObjective2Collection3T2R2CCB7 Corn        Leaf     7/31/17
+## 130  Corn2017LeafObjective2Collection3T2R2FAC7 Corn        Leaf     7/31/17
+## 131  Corn2017LeafObjective2Collection3T2R2FBD7 Corn        Leaf     7/31/17
+## 132  Corn2017LeafObjective2Collection3T2R2FCE7 Corn        Leaf     7/31/17
+## 133  Corn2017LeafObjective2Collection3T2R5CAF7 Corn        Leaf     7/31/17
+## 134  Corn2017LeafObjective2Collection3T2R5CBG7 Corn        Leaf     7/31/17
+## 135  Corn2017LeafObjective2Collection3T2R5CCH7 Corn        Leaf     7/31/17
+## 136  Corn2017LeafObjective2Collection3T2R5FAA8 Corn        Leaf     7/31/17
+## 137  Corn2017LeafObjective2Collection3T2R5FBB8 Corn        Leaf     7/31/17
+## 138  Corn2017LeafObjective2Collection3T2R5FCC8 Corn        Leaf     7/31/17
+## 139  Corn2017LeafObjective2Collection3T2R6CAD8 Corn        Leaf     7/31/17
+## 140  Corn2017LeafObjective2Collection3T2R6CBE8 Corn        Leaf     7/31/17
+## 141  Corn2017LeafObjective2Collection3T2R6CCF8 Corn        Leaf     7/31/17
+## 142  Corn2017LeafObjective2Collection3T2R6FAG8 Corn        Leaf     7/31/17
+## 143  Corn2017LeafObjective2Collection3T2R6FBH8 Corn        Leaf     7/31/17
+## 144  Corn2017LeafObjective2Collection3T2R6FCA9 Corn        Leaf     7/31/17
+## 145                                   T1R1AR4L  Soy        Leaf     8/16/18
+## 146                                   T1R1BR4L  Soy        Leaf     8/16/18
+## 147                                  T1R1CAR3L  Soy        Leaf      8/3/18
+## 148                                  T1R1CAR6L  Soy        Leaf     8/27/18
+## 149                                  T1R1CBR3L  Soy        Leaf      8/3/18
+## 150                                  T1R1CBR6L  Soy        Leaf     8/27/18
+## 151                                  T1R1CCR3L  Soy        Leaf      8/3/18
+## 152                                  T1R1CCR6L  Soy        Leaf     8/27/18
+## 153                                   T1R1CR4L  Soy        Leaf     8/16/18
+## 154                                  T1R1FAR3L  Soy        Leaf      8/3/18
+## 155                                  T1R1FAR4L  Soy        Leaf     8/16/18
+## 156                                  T1R1FAR6L  Soy        Leaf     8/27/18
+## 157                                  T1R1FBR3L  Soy        Leaf      8/3/18
+## 158                                  T1R1FBR4L  Soy        Leaf     8/16/18
+## 159                                  T1R1FBR6L  Soy        Leaf     8/27/18
+## 160                                  T1R1FCR3L  Soy        Leaf      8/3/18
+## 161                                  T1R1FCR4L  Soy        Leaf     8/16/18
+## 162                                  T1R1FCR6L  Soy        Leaf     8/27/18
+## 163                                  T1R2CAR3L  Soy        Leaf      8/3/18
+## 164                                  T1R2CAR4L  Soy        Leaf     8/16/18
+## 165                                  T1R2CAR6L  Soy        Leaf     8/27/18
+## 166                                  T1R2CBR3L  Soy        Leaf      8/3/18
+## 167                                  T1R2CBR4L  Soy        Leaf     8/16/18
+## 168                                  T1R2CBR6L  Soy        Leaf     8/27/18
+## 169                                  T1R2CCR3L  Soy        Leaf      8/3/18
+## 170                                  T1R2CCR4L  Soy        Leaf     8/16/18
+## 171                                  T1R2CCR6L  Soy        Leaf     8/27/18
+## 172                                  T1R2FAR3L  Soy        Leaf      8/3/18
+## 173                                  T1R2FAR4L  Soy        Leaf     8/16/18
+## 174                                  T1R2FAR6L  Soy        Leaf     8/27/18
+## 175                                  T1R2FBR3L  Soy        Leaf      8/3/18
+## 176                                  T1R2FBR4L  Soy        Leaf     8/16/18
+## 177                                  T1R2FBR6L  Soy        Leaf     8/27/18
+## 178                                  T1R2FCR3L  Soy        Leaf      8/3/18
+## 179                                  T1R2FCR4L  Soy        Leaf     8/16/18
+## 180                                  T1R2FCR6L  Soy        Leaf     8/27/18
+## 181                                  T1R5CAR3L  Soy        Leaf      8/3/18
+## 182                                  T1R5CAR4L  Soy        Leaf     8/16/18
+## 183                                  T1R5CAR6L  Soy        Leaf     8/27/18
+## 184                                  T1R5CBR3L  Soy        Leaf      8/3/18
+## 185                                  T1R5CBR4L  Soy        Leaf     8/16/18
+## 186                                  T1R5CBR6L  Soy        Leaf     8/27/18
+## 187                                  T1R5CCR3L  Soy        Leaf      8/3/18
+## 188                                  T1R5CCR4L  Soy        Leaf     8/16/18
+## 189                                  T1R5CCR6L  Soy        Leaf     8/27/18
+## 190                                  T1R5FAR3L  Soy        Leaf      8/3/18
+## 191                                  T1R5FAR4L  Soy        Leaf     8/16/18
+## 192                                  T1R5FAR6L  Soy        Leaf     8/27/18
+## 193                                  T1R5FBR3L  Soy        Leaf      8/3/18
+## 194                                  T1R5FBR4L  Soy        Leaf     8/16/18
+## 195                                  T1R5FBR6L  Soy        Leaf     8/27/18
+## 196                                  T1R5FCR3L  Soy        Leaf      8/3/18
+## 197                                  T1R5FCR4L  Soy        Leaf     8/16/18
+## 198                                  T1R5FCR6L  Soy        Leaf     8/27/18
+## 199                                  T1R6CAR3L  Soy        Leaf      8/3/18
+## 200                                  T1R6CAR4L  Soy        Leaf     8/16/18
+## 201                                  T1R6CAR6L  Soy        Leaf     8/27/18
+## 202                                  T1R6CBR3L  Soy        Leaf      8/3/18
+## 203                                  T1R6CBR4L  Soy        Leaf     8/16/18
+## 204                                  T1R6CBR6L  Soy        Leaf     8/27/18
+## 205                                  T1R6CCR3L  Soy        Leaf      8/3/18
+## 206                                  T1R6CCR4L  Soy        Leaf     8/16/18
+## 207                                  T1R6CCR6L  Soy        Leaf     8/27/18
+## 208                                  T1R6FAR3L  Soy        Leaf      8/3/18
+## 209                                  T1R6FAR4L  Soy        Leaf     8/16/18
+## 210                                  T1R6FAR6L  Soy        Leaf     8/27/18
+## 211                                  T1R6FBR3L  Soy        Leaf      8/3/18
+## 212                                  T1R6FBR4L  Soy        Leaf     8/16/18
+## 213                                  T1R6FBR6L  Soy        Leaf     8/27/18
+## 214                                  T1R6FCR3L  Soy        Leaf      8/3/18
+## 215                                  T1R6FCR4L  Soy        Leaf     8/16/18
+## 216                                  T1R6FCR6L  Soy        Leaf     8/27/18
+## 217                                  T2R1CAR3L  Soy        Leaf      8/3/18
+## 218                                  T2R1CAR4L  Soy        Leaf     8/16/18
+## 219                                  T2R1CAR6L  Soy        Leaf     8/27/18
+## 220                                  T2R1CBR3L  Soy        Leaf      8/3/18
+## 221                                  T2R1CBR4L  Soy        Leaf     8/16/18
+## 222                                  T2R1CBR6L  Soy        Leaf     8/27/18
+## 223                                  T2R1CCR3L  Soy        Leaf      8/3/18
+## 224                                  T2R1CCR4L  Soy        Leaf     8/16/18
+## 225                                  T2R1CCR6L  Soy        Leaf     8/27/18
+## 226                                  T2R1FAR3L  Soy        Leaf      8/3/18
+## 227                                  T2R1FAR4L  Soy        Leaf     8/16/18
+## 228                                  T2R1FAR6L  Soy        Leaf     8/27/18
+## 229                                  T2R1FBR3L  Soy        Leaf      8/3/18
+## 230                                  T2R1FBR4L  Soy        Leaf     8/16/18
+## 231                                  T2R1FBR6L  Soy        Leaf     8/27/18
+## 232                                  T2R1FCR3L  Soy        Leaf      8/3/18
+## 233                                  T2R1FCR4L  Soy        Leaf     8/16/18
+## 234                                  T2R2CAR3L  Soy        Leaf      8/3/18
+## 235                                  T2R2CAR4L  Soy        Leaf     8/16/18
+## 236                                  T2R2CAR6L  Soy        Leaf     8/27/18
+## 237                                  T2R2CBR3L  Soy        Leaf      8/3/18
+## 238                                  T2R2CBR4L  Soy        Leaf     8/16/18
+## 239                                  T2R2CBR6L  Soy        Leaf     8/27/18
+## 240                                  T2R2CCR3L  Soy        Leaf      8/3/18
+## 241                                  T2R2CCR4L  Soy        Leaf     8/16/18
+## 242                                  T2R2CCR6L  Soy        Leaf     8/27/18
+## 243                                  T2R2FAR3L  Soy        Leaf      8/3/18
+## 244                                  T2R2FAR4L  Soy        Leaf     8/16/18
+## 245                                  T2R2FAR6L  Soy        Leaf     8/27/18
+## 246                                  T2R2FBR3L  Soy        Leaf      8/3/18
+## 247                                  T2R2FBR4L  Soy        Leaf     8/16/18
+## 248                                  T2R2FBR6L  Soy        Leaf     8/27/18
+## 249                                  T2R2FCR3L  Soy        Leaf      8/3/18
+## 250                                  T2R2FCR4L  Soy        Leaf     8/16/18
+## 251                                  T2R2FCR6L  Soy        Leaf     8/27/18
+## 252                                  T2R5CAR3L  Soy        Leaf      8/3/18
+## 253                                  T2R5CAR4L  Soy        Leaf     8/16/18
+## 254                                  T2R5CAR6L  Soy        Leaf     8/27/18
+## 255                                  T2R5CBR3L  Soy        Leaf      8/3/18
+## 256                                  T2R5CBR4L  Soy        Leaf     8/16/18
+## 257                                  T2R5CBR6L  Soy        Leaf     8/27/18
+## 258                                  T2R5CCR3L  Soy        Leaf      8/3/18
+## 259                                  T2R5CCR4L  Soy        Leaf     8/16/18
+## 260                                  T2R5CCR6L  Soy        Leaf     8/27/18
+## 261                                  T2R5FAR3L  Soy        Leaf      8/3/18
+## 262                                  T2R5FAR4L  Soy        Leaf     8/16/18
+## 263                                  T2R5FAR6L  Soy        Leaf     8/27/18
+## 264                                  T2R5FBR3L  Soy        Leaf      8/3/18
+## 265                                  T2R5FBR4L  Soy        Leaf     8/16/18
+## 266                                  T2R5FBR6L  Soy        Leaf     8/27/18
+## 267                                  T2R5FCR3L  Soy        Leaf      8/3/18
+## 268                                  T2R5FCR4L  Soy        Leaf     8/16/18
+## 269                                  T2R5FCR6L  Soy        Leaf     8/27/18
+## 270                                  T2R6CAR3L  Soy        Leaf      8/3/18
+## 271                                  T2R6CAR4L  Soy        Leaf     8/16/18
+## 272                                  T2R6CAR6L  Soy        Leaf     8/27/18
+## 273                                  T2R6CBR3L  Soy        Leaf      8/3/18
+## 274                                  T2R6CBR4L  Soy        Leaf     8/16/18
+## 275                                  T2R6CBR6L  Soy        Leaf     8/27/18
+## 276                                  T2R6CCR3L  Soy        Leaf      8/3/18
+## 277                                  T2R6CCR4L  Soy        Leaf     8/16/18
+## 278                                  T2R6CCR6L  Soy        Leaf     8/27/18
+## 279                                  T2R6FAR3L  Soy        Leaf      8/3/18
+## 280                                  T2R6FAR4L  Soy        Leaf     8/16/18
+## 281                                  T2R6FAR6L  Soy        Leaf     8/27/18
+## 282                                  T2R6FBR3L  Soy        Leaf      8/3/18
+## 283                                  T2R6FBR4L  Soy        Leaf     8/16/18
+## 284                                  T2R6FBR6L  Soy        Leaf     8/27/18
+## 285                                  T2R6FCR3L  Soy        Leaf      8/3/18
+## 286                                  T2R6FCR4L  Soy        Leaf     8/16/18
+## 287                                  T2R6FCR6L  Soy        Leaf     8/27/18
+##     GrowthStage Treatment Rep Sample Fungicide richness
+## 1            V6     Conv.  R1      A         C        9
+## 2            V6     Conv.  R1      B         C        6
+## 3            V6     Conv.  R1      C         C        5
+## 4            V6     Conv.  R1      A         F        7
+## 5            V6     Conv.  R1      B         F        4
+## 6            V6     Conv.  R1      C         F        2
+## 7            V6     Conv.  R2      A         C        3
+## 8            V6     Conv.  R2      B         C        8
+## 9            V6     Conv.  R2      C         C        4
+## 10           V6     Conv.  R2      A         F        4
+## 11           V6     Conv.  R2      B         F        3
+## 12           V6     Conv.  R2      C         F        5
+## 13           V6     Conv.  R5      A         C        5
+## 14           V6     Conv.  R5      B         C        4
+## 15           V6     Conv.  R5      C         C       10
+## 16           V6     Conv.  R5      A         F        4
+## 17           V6     Conv.  R5      B         F        6
+## 18           V6     Conv.  R5      C         F        6
+## 19           V6     Conv.  R6      A         C        2
+## 20           V6     Conv.  R6      B         C        1
+## 21           V6     Conv.  R6      C         C        6
+## 22           V6     Conv.  R6      A         F        1
+## 23           V6     Conv.  R6      B         F        4
+## 24           V6     Conv.  R6      C         F        2
+## 25           V6   No-till  R1      A         C        6
+## 26           V6   No-till  R1      B         C        3
+## 27           V6   No-till  R1      C         C        4
+## 28           V6   No-till  R1      A         F       15
+## 29           V6   No-till  R1      B         F        5
+## 30           V6   No-till  R1      C         F        9
+## 31           V6   No-till  R2      A         C        5
+## 32           V6   No-till  R2      B         C        5
+## 33           V6   No-till  R2      C         C        6
+## 34           V6   No-till  R2      A         F       15
+## 35           V6   No-till  R2      B         F        3
+## 36           V6   No-till  R2      C         F        2
+## 37           V6   No-till  R5      A         C        9
+## 38           V6   No-till  R5      B         C        9
+## 39           V6   No-till  R5      C         C        3
+## 40           V6   No-till  R5      A         F        8
+## 41           V6   No-till  R5      B         F        1
+## 42           V6   No-till  R5      C         F       12
+## 43           V6   No-till  R6      A         C       11
+## 44           V6   No-till  R6      B         C        7
+## 45           V6   No-till  R6      C         C        7
+## 46           V6   No-till  R6      A         F        6
+## 47           V6   No-till  R6      B         F        6
+## 48           V6   No-till  R6      C         F        3
+## 49           V8     Conv.  R1      A         C       19
+## 50           V8     Conv.  R1      B         C       11
+## 51           V8     Conv.  R1      C         C       10
+## 52           V8     Conv.  R1      A         F        4
+## 53           V8     Conv.  R1      B         F        3
+## 54           V8     Conv.  R1      C         F       10
+## 55           V8     Conv.  R2      A         C       14
+## 56           V8     Conv.  R2      B         C        7
+## 57           V8     Conv.  R2      C         C       14
+## 58           V8     Conv.  R2      A         F        3
+## 59           V8     Conv.  R2      B         F        4
+## 60           V8     Conv.  R2      C         F        2
+## 61           V8     Conv.  R5      A         C        7
+## 62           V8     Conv.  R5      B         C       17
+## 63           V8     Conv.  R5      C         C       10
+## 64           V8     Conv.  R5      A         F        4
+## 65           V8     Conv.  R5      B         F        6
+## 66           V8     Conv.  R5      C         F        3
+## 67           V8     Conv.  R6      A         C       17
+## 68           V8     Conv.  R6      B         C        5
+## 69           V8     Conv.  R6      C         C       10
+## 70           V8     Conv.  R6      A         F        2
+## 71           V8     Conv.  R6      B         F        8
+## 72           V8     Conv.  R6      C         F        6
+## 73           V8   No-till  R1      A         C       10
+## 74           V8   No-till  R1      B         C       19
+## 75           V8   No-till  R1      C         C       19
+## 76           V8   No-till  R1      A         F        4
+## 77           V8   No-till  R1      B         F        7
+## 78           V8   No-till  R1      C         F        6
+## 79           V8   No-till  R2      A         C       18
+## 80           V8   No-till  R2      B         C       11
+## 81           V8   No-till  R2      C         C       11
+## 82           V8   No-till  R2      A         F        6
+## 83           V8   No-till  R2      B         F        8
+## 84           V8   No-till  R2      C         F       10
+## 85           V8   No-till  R5      A         C       17
+## 86           V8   No-till  R5      B         C       13
+## 87           V8   No-till  R5      C         C       15
+## 88           V8   No-till  R5      A         F       11
+## 89           V8   No-till  R5      B         F        8
+## 90           V8   No-till  R5      C         F        6
+## 91           V8   No-till  R6      A         C        6
+## 92           V8   No-till  R6      B         C       13
+## 93           V8   No-till  R6      C         C       21
+## 94           V8   No-till  R6      A         F       10
+## 95           V8   No-till  R6      B         F        7
+## 96           V8   No-till  R6      C         F        6
+## 97          V15     Conv.  R1      A         C       15
+## 98          V15     Conv.  R1      B         C       16
+## 99          V15     Conv.  R1      C         C       12
+## 100         V15     Conv.  R1      A         F       15
+## 101         V15     Conv.  R1      B         F       14
+## 102         V15     Conv.  R1      C         F       10
+## 103         V15     Conv.  R2      A         C       11
+## 104         V15     Conv.  R2      B         C       12
+## 105         V15     Conv.  R2      C         C       12
+## 106         V15     Conv.  R2      A         F       17
+## 107         V15     Conv.  R2      B         F       16
+## 108         V15     Conv.  R2      C         F        8
+## 109         V15     Conv.  R5      A         C       22
+## 110         V15     Conv.  R5      B         C       26
+## 111         V15     Conv.  R5      C         C       11
+## 112         V15     Conv.  R5      A         F       23
+## 113         V15     Conv.  R5      B         F       17
+## 114         V15     Conv.  R5      C         F        5
+## 115         V15     Conv.  R6      A         C       16
+## 116         V15     Conv.  R6      B         C       10
+## 117         V15     Conv.  R6      C         C       10
+## 118         V15     Conv.  R6      A         F        8
+## 119         V15     Conv.  R6      B         F       12
+## 120         V15     Conv.  R6      C         F       17
+## 121         V15   No-till  R1      A         C        8
+## 122         V15   No-till  R1      B         C       14
+## 123         V15   No-till  R1      C         C        7
+## 124         V15   No-till  R1      A         F       15
+## 125         V15   No-till  R1      B         F       11
+## 126         V15   No-till  R1      C         F       19
+## 127         V15   No-till  R2      A         C       15
+## 128         V15   No-till  R2      B         C       13
+## 129         V15   No-till  R2      C         C       16
+## 130         V15   No-till  R2      A         F       20
+## 131         V15   No-till  R2      B         F       32
+## 132         V15   No-till  R2      C         F       31
+## 133         V15   No-till  R5      A         C       25
+## 134         V15   No-till  R5      B         C       18
+## 135         V15   No-till  R5      C         C       20
+## 136         V15   No-till  R5      A         F       33
+## 137         V15   No-till  R5      B         F       33
+## 138         V15   No-till  R5      C         F       14
+## 139         V15   No-till  R6      A         C       12
+## 140         V15   No-till  R6      B         C       22
+## 141         V15   No-till  R6      C         C       21
+## 142         V15   No-till  R6      A         F       36
+## 143         V15   No-till  R6      B         F       18
+## 144         V15   No-till  R6      C         F       29
+## 145          R4     Conv.  R1      A         C       21
+## 146          R4     Conv.  R1      B         C       12
+## 147          R3     Conv.  R1      A         C       15
+## 148          R6     Conv.  R1      A         C       22
+## 149          R3     Conv.  R1      B         C       18
+## 150          R6     Conv.  R1      B         C       20
+## 151          R3     Conv.  R1      C         C       18
+## 152          R6     Conv.  R1      C         C       21
+## 153          R4     Conv.  R1      C         C       19
+## 154          R3     Conv.  R1      A         F       15
+## 155          R4     Conv.  R1      A         F       11
+## 156          R6     Conv.  R1      A         F       10
+## 157          R3     Conv.  R1      B         F       10
+## 158          R4     Conv.  R1      B         F        7
+## 159          R6     Conv.  R1      B         F        6
+## 160          R3     Conv.  R1      C         F       16
+## 161          R4     Conv.  R1      C         F       16
+## 162          R6     Conv.  R1      C         F       15
+## 163          R3     Conv.  R2      A         C        7
+## 164          R4     Conv.  R2      A         C       28
+## 165          R6     Conv.  R2      A         C       22
+## 166          R3     Conv.  R2      B         C        9
+## 167          R4     Conv.  R2      B         C       19
+## 168          R6     Conv.  R2      B         C       15
+## 169          R3     Conv.  R2      C         C       14
+## 170          R4     Conv.  R2      C         C       21
+## 171          R6     Conv.  R2      C         C       18
+## 172          R3     Conv.  R2      A         F       13
+## 173          R4     Conv.  R2      A         F       11
+## 174          R6     Conv.  R2      A         F       12
+## 175          R3     Conv.  R2      B         F       12
+## 176          R4     Conv.  R2      B         F        8
+## 177          R6     Conv.  R2      B         F        4
+## 178          R3     Conv.  R2      C         F       15
+## 179          R4     Conv.  R2      C         F        8
+## 180          R6     Conv.  R2      C         F       10
+## 181          R3     Conv.  R5      A         C       25
+## 182          R4     Conv.  R5      A         C       18
+## 183          R6     Conv.  R5      A         C       23
+## 184          R3     Conv.  R5      B         C       18
+## 185          R4     Conv.  R5      B         C       16
+## 186          R6     Conv.  R5      B         C       22
+## 187          R3     Conv.  R5      C         C       19
+## 188          R4     Conv.  R5      C         C       14
+## 189          R6     Conv.  R5      C         C       17
+## 190          R3     Conv.  R5      A         F       22
+## 191          R4     Conv.  R5      A         F        9
+## 192          R6     Conv.  R5      A         F        7
+## 193          R3     Conv.  R5      B         F       13
+## 194          R4     Conv.  R5      B         F       14
+## 195          R6     Conv.  R5      B         F        9
+## 196          R3     Conv.  R5      C         F       23
+## 197          R4     Conv.  R5      C         F        9
+## 198          R6     Conv.  R5      C         F        6
+## 199          R3     Conv.  R6      A         C       25
+## 200          R4     Conv.  R6      A         C       22
+## 201          R6     Conv.  R6      A         C       20
+## 202          R3     Conv.  R6      B         C       27
+## 203          R4     Conv.  R6      B         C       19
+## 204          R6     Conv.  R6      B         C       15
+## 205          R3     Conv.  R6      C         C       23
+## 206          R4     Conv.  R6      C         C       22
+## 207          R6     Conv.  R6      C         C       13
+## 208          R3     Conv.  R6      A         F       18
+## 209          R4     Conv.  R6      A         F       13
+## 210          R6     Conv.  R6      A         F       17
+## 211          R3     Conv.  R6      B         F       19
+## 212          R4     Conv.  R6      B         F       10
+## 213          R6     Conv.  R6      B         F       11
+## 214          R3     Conv.  R6      C         F       17
+## 215          R4     Conv.  R6      C         F        5
+## 216          R6     Conv.  R6      C         F       16
+## 217          R3   No-till  R1      A         C       20
+## 218          R4   No-till  R1      A         C       25
+## 219          R6   No-till  R1      A         C       18
+## 220          R3   No-till  R1      B         C       21
+## 221          R4   No-till  R1      B         C       17
+## 222          R6   No-till  R1      B         C       15
+## 223          R3   No-till  R1      C         C       22
+## 224          R4   No-till  R1      C         C       27
+## 225          R6   No-till  R1      C         C       20
+## 226          R3   No-till  R1      A         F       25
+## 227          R4   No-till  R1      A         F       11
+## 228          R6   No-till  R1      A         F       12
+## 229          R3   No-till  R1      B         F       39
+## 230          R4   No-till  R1      B         F       12
+## 231          R6   No-till  R1      B         F        9
+## 232          R3   No-till  R1      C         F       19
+## 233          R4   No-till  R1      C         F        7
+## 234          R3   No-till  R2      A         C       18
+## 235          R4   No-till  R2      A         C       24
+## 236          R6   No-till  R2      A         C       16
+## 237          R3   No-till  R2      B         C       18
+## 238          R4   No-till  R2      B         C       17
+## 239          R6   No-till  R2      B         C       16
+## 240          R3   No-till  R2      C         C       14
+## 241          R4   No-till  R2      C         C       22
+## 242          R6   No-till  R2      C         C       25
+## 243          R3   No-till  R2      A         F       22
+## 244          R4   No-till  R2      A         F       10
+## 245          R6   No-till  R2      A         F       13
+## 246          R3   No-till  R2      B         F       13
+## 247          R4   No-till  R2      B         F        8
+## 248          R6   No-till  R2      B         F       13
+## 249          R3   No-till  R2      C         F       15
+## 250          R4   No-till  R2      C         F       10
+## 251          R6   No-till  R2      C         F       10
+## 252          R3   No-till  R5      A         C       25
+## 253          R4   No-till  R5      A         C       19
+## 254          R6   No-till  R5      A         C       17
+## 255          R3   No-till  R5      B         C       13
+## 256          R4   No-till  R5      B         C       16
+## 257          R6   No-till  R5      B         C       19
+## 258          R3   No-till  R5      C         C       15
+## 259          R4   No-till  R5      C         C        9
+## 260          R6   No-till  R5      C         C       19
+## 261          R3   No-till  R5      A         F       15
+## 262          R4   No-till  R5      A         F        5
+## 263          R6   No-till  R5      A         F       12
+## 264          R3   No-till  R5      B         F       14
+## 265          R4   No-till  R5      B         F        5
+## 266          R6   No-till  R5      B         F       17
+## 267          R3   No-till  R5      C         F       11
+## 268          R4   No-till  R5      C         F        6
+## 269          R6   No-till  R5      C         F       28
+## 270          R3   No-till  R6      A         C       18
+## 271          R4   No-till  R6      A         C       15
+## 272          R6   No-till  R6      A         C       19
+## 273          R3   No-till  R6      B         C       15
+## 274          R4   No-till  R6      B         C       14
+## 275          R6   No-till  R6      B         C       20
+## 276          R3   No-till  R6      C         C       14
+## 277          R4   No-till  R6      C         C       23
+## 278          R6   No-till  R6      C         C       24
+## 279          R3   No-till  R6      A         F       11
+## 280          R4   No-till  R6      A         F        8
+## 281          R6   No-till  R6      A         F        7
+## 282          R3   No-till  R6      B         F       11
+## 283          R4   No-till  R6      B         F        7
+## 284          R6   No-till  R6      B         F       14
+## 285          R3   No-till  R6      C         F       21
+## 286          R4   No-till  R6      C         F        9
+## 287          R6   No-till  R6      C         F       14
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{microbiome.fungi }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(SampleID, Crop, Compartment}\SpecialCharTok{:}\NormalTok{Fungicide, richness) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# selecting columns}
+  \FunctionTok{filter}\NormalTok{(Treatment }\SpecialCharTok{==} \StringTok{"Conv."}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# subsetting to only include the conventional treatment}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{logRich =} \FunctionTok{log}\NormalTok{(richness)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# creating a new column of the log richness}
+  \FunctionTok{head}\NormalTok{() }\CommentTok{\# displaying the first six rows}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                    SampleID Crop Compartment DateSampled
+## 1 Corn2017LeafObjective2Collection1T1R1CAH2 Corn        Leaf     6/26/17
+## 2 Corn2017LeafObjective2Collection1T1R1CBA3 Corn        Leaf     6/26/17
+## 3 Corn2017LeafObjective2Collection1T1R1CCB3 Corn        Leaf     6/26/17
+## 4 Corn2017LeafObjective2Collection1T1R1FAC3 Corn        Leaf     6/26/17
+## 5 Corn2017LeafObjective2Collection1T1R1FBD3 Corn        Leaf     6/26/17
+## 6 Corn2017LeafObjective2Collection1T1R1FCE3 Corn        Leaf     6/26/17
+##   GrowthStage Treatment Rep Sample Fungicide richness   logRich
+## 1          V6     Conv.  R1      A         C        9 2.1972246
+## 2          V6     Conv.  R1      B         C        6 1.7917595
+## 3          V6     Conv.  R1      C         C        5 1.6094379
+## 4          V6     Conv.  R1      A         F        7 1.9459101
+## 5          V6     Conv.  R1      B         F        4 1.3862944
+## 6          V6     Conv.  R1      C         F        2 0.6931472
+\end{verbatim}
+
+\paragraph{\texorpdfstring{\texttt{summarise()}}{summarise()}}\label{summarise}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{microbiome.fungi }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(SampleID, Crop, Compartment}\SpecialCharTok{:}\NormalTok{Fungicide, richness) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# selecting columns}
+  \FunctionTok{filter}\NormalTok{(Treatment }\SpecialCharTok{==} \StringTok{"Conv."}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# subsetting to only include the conventional treatment}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{logRich =} \FunctionTok{log}\NormalTok{(richness)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# creating a new column of the log richness}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Mean.rich =} \FunctionTok{mean}\NormalTok{(logRich)) }\CommentTok{\# calculating overall mean log richness within the conventionally managed treatment}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Mean.rich
+## 1  2.304395
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{microbiome.fungi }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(SampleID, Crop, Compartment}\SpecialCharTok{:}\NormalTok{Fungicide, richness) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# selecting columns}
+  \FunctionTok{filter}\NormalTok{(Treatment }\SpecialCharTok{==} \StringTok{"Conv."}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# subsetting to only include the conventional treatment}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{logRich =} \FunctionTok{log}\NormalTok{(richness)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# creating a new column of the log richness}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Mean.rich =} \FunctionTok{mean}\NormalTok{(logRich), }\CommentTok{\# calculating the mean richness, stdeviation, and standard error}
+            \AttributeTok{n =} \FunctionTok{n}\NormalTok{(), }
+            \AttributeTok{sd.dev =} \FunctionTok{sd}\NormalTok{(logRich)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{std.err =}\NormalTok{ sd.dev}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(n))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Mean.rich   n    sd.dev   std.err
+## 1  2.304395 144 0.7024667 0.0585389
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{microbiome.fungi }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(SampleID, Crop, Compartment}\SpecialCharTok{:}\NormalTok{Fungicide, richness) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# selecting columns}
+  \FunctionTok{group\_by}\NormalTok{(Treatment, Fungicide) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# grouping by treatment and fungicide to later calculate summary stats by group}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{logRich =} \FunctionTok{log}\NormalTok{(richness)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# creating a new column of the log richness}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Mean.rich =} \FunctionTok{mean}\NormalTok{(logRich), }\CommentTok{\# calculating the mean richness, stdeviation, and standard error}
+            \AttributeTok{n =} \FunctionTok{n}\NormalTok{(), }
+            \AttributeTok{sd.dev =} \FunctionTok{sd}\NormalTok{(logRich)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{std.err =}\NormalTok{ sd.dev}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(n))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'Treatment'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 4 x 6
+## # Groups:   Treatment [2]
+##   Treatment Fungicide Mean.rich     n sd.dev std.err
+##   <chr>     <chr>         <dbl> <int>  <dbl>   <dbl>
+## 1 Conv.     C              2.53    72  0.635  0.0748
+## 2 Conv.     F              2.07    72  0.696  0.0820
+## 3 No-till   C              2.63    72  0.513  0.0604
+## 4 No-till   F              2.36    71  0.680  0.0807
+\end{verbatim}
+
+\paragraph{Connecting to plotting}\label{connecting-to-plotting}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot1 }\OtherTok{\textless{}{-}}\NormalTok{ microbiome.fungi }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(SampleID, Crop, Compartment}\SpecialCharTok{:}\NormalTok{Fungicide, richness) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# selecting columns}
+  \FunctionTok{group\_by}\NormalTok{(Treatment, Fungicide) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# grouping by treatment and fungicide to later calculate summary stats by group}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{logRich =} \FunctionTok{log}\NormalTok{(richness)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# creating a new column of the log richness}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Mean.rich =} \FunctionTok{mean}\NormalTok{(logRich), }\CommentTok{\# calculating the mean richness, stdeviation, and standard error}
+            \AttributeTok{n =} \FunctionTok{n}\NormalTok{(), }
+            \AttributeTok{sd.dev =} \FunctionTok{sd}\NormalTok{(logRich)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{std.err =}\NormalTok{ sd.dev}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(n)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Fungicide, }\AttributeTok{y =}\NormalTok{ Mean.rich)) }\SpecialCharTok{+} \CommentTok{\# adding in a ggplot}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_errorbar}\NormalTok{( }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Fungicide, }\AttributeTok{ymin=}\NormalTok{Mean.rich}\SpecialCharTok{{-}}\NormalTok{std.err, }\AttributeTok{ymax=}\NormalTok{Mean.rich}\SpecialCharTok{+}\NormalTok{std.err), }\AttributeTok{width=}\FloatTok{0.4}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Log Richness"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{Treatment)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'Treatment'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\paragraph{Joining}\label{joining}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# selecting just the richness and sample ID}
+\NormalTok{richness }\OtherTok{\textless{}{-}}\NormalTok{ microbiome.fungi }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(SampleID, richness)}
+
+\CommentTok{\# selecting columns that don\textquotesingle{}t include the richness}
+\NormalTok{metadata }\OtherTok{\textless{}{-}}\NormalTok{ microbiome.fungi }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(SampleID, Fungicide, Crop, Compartment, GrowthStage, Treatment, Rep, Sample)}
+
+\FunctionTok{head}\NormalTok{(metadata)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                    SampleID Fungicide Crop Compartment
+## 1 Corn2017LeafObjective2Collection1T1R1CAH2         C Corn        Leaf
+## 2 Corn2017LeafObjective2Collection1T1R1CBA3         C Corn        Leaf
+## 3 Corn2017LeafObjective2Collection1T1R1CCB3         C Corn        Leaf
+## 4 Corn2017LeafObjective2Collection1T1R1FAC3         F Corn        Leaf
+## 5 Corn2017LeafObjective2Collection1T1R1FBD3         F Corn        Leaf
+## 6 Corn2017LeafObjective2Collection1T1R1FCE3         F Corn        Leaf
+##   GrowthStage Treatment Rep Sample
+## 1          V6     Conv.  R1      A
+## 2          V6     Conv.  R1      B
+## 3          V6     Conv.  R1      C
+## 4          V6     Conv.  R1      A
+## 5          V6     Conv.  R1      B
+## 6          V6     Conv.  R1      C
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(richness)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                    SampleID richness
+## 1 Corn2017LeafObjective2Collection1T1R1CAH2        9
+## 2 Corn2017LeafObjective2Collection1T1R1CBA3        6
+## 3 Corn2017LeafObjective2Collection1T1R1CCB3        5
+## 4 Corn2017LeafObjective2Collection1T1R1FAC3        7
+## 5 Corn2017LeafObjective2Collection1T1R1FBD3        4
+## 6 Corn2017LeafObjective2Collection1T1R1FCE3        2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(}\FunctionTok{left\_join}\NormalTok{(metadata, richness, }\AttributeTok{by =} \StringTok{"SampleID"}\NormalTok{)) }\CommentTok{\# adding the richness data to the metadata based on on the common column of sampleID}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                    SampleID Fungicide Crop Compartment
+## 1 Corn2017LeafObjective2Collection1T1R1CAH2         C Corn        Leaf
+## 2 Corn2017LeafObjective2Collection1T1R1CBA3         C Corn        Leaf
+## 3 Corn2017LeafObjective2Collection1T1R1CCB3         C Corn        Leaf
+## 4 Corn2017LeafObjective2Collection1T1R1FAC3         F Corn        Leaf
+## 5 Corn2017LeafObjective2Collection1T1R1FBD3         F Corn        Leaf
+## 6 Corn2017LeafObjective2Collection1T1R1FCE3         F Corn        Leaf
+##   GrowthStage Treatment Rep Sample richness
+## 1          V6     Conv.  R1      A        9
+## 2          V6     Conv.  R1      B        6
+## 3          V6     Conv.  R1      C        5
+## 4          V6     Conv.  R1      A        7
+## 5          V6     Conv.  R1      B        4
+## 6          V6     Conv.  R1      C        2
+\end{verbatim}
+
+\paragraph{Pivoting}\label{pivoting}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{microbiome.fungi }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(SampleID, Crop, Compartment}\SpecialCharTok{:}\NormalTok{Fungicide, richness) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(Treatment, Fungicide) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# grouping by treatment and fungicide to later calculate summary stats by group}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Mean =} \FunctionTok{mean}\NormalTok{(richness)) }\CommentTok{\# calculates the mean per Treatment and Fungicide }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'Treatment'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 4 x 3
+## # Groups:   Treatment [2]
+##   Treatment Fungicide  Mean
+##   <chr>     <chr>     <dbl>
+## 1 Conv.     C         14.6 
+## 2 Conv.     F          9.75
+## 3 No-till   C         15.4 
+## 4 No-till   F         13.1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{microbiome.fungi }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(SampleID, Crop, Compartment}\SpecialCharTok{:}\NormalTok{Fungicide, richness) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# selecting columns  }
+  \FunctionTok{group\_by}\NormalTok{(Treatment, Fungicide) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# grouping by treatment and fungicide to later calculate summary stats by group}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Mean =} \FunctionTok{mean}\NormalTok{(richness)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# calculates the mean per Treatment and Fungicide }
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =}\NormalTok{ Fungicide, }\AttributeTok{values\_from =}\NormalTok{ Mean) }\CommentTok{\# pivot to wide format}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'Treatment'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 2 x 3
+## # Groups:   Treatment [2]
+##   Treatment     C     F
+##   <chr>     <dbl> <dbl>
+## 1 Conv.      14.6  9.75
+## 2 No-till    15.4 13.1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{microbiome.fungi }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(SampleID, Crop, Compartment}\SpecialCharTok{:}\NormalTok{Fungicide, richness) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# selecting columns  filter(Class == "Sordariomycetes") \%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Treatment, Fungicide) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# grouping by treatment and fungicide to later calculate summary stats by group}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Mean =} \FunctionTok{mean}\NormalTok{(richness)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# calculates the mean per Treatment and Fungicide }
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =}\NormalTok{ Fungicide, }\AttributeTok{values\_from =}\NormalTok{ Mean) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# pivot to wide format}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{diff.fungicide =}\NormalTok{ C }\SpecialCharTok{{-}}\NormalTok{ F) }\CommentTok{\# calculate the difference between the means. }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'Treatment'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 2 x 4
+## # Groups:   Treatment [2]
+##   Treatment     C     F diff.fungicide
+##   <chr>     <dbl> <dbl>          <dbl>
+## 1 Conv.      14.6  9.75           4.89
+## 2 No-till    15.4 13.1            2.32
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{microbiome.fungi }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(SampleID, Crop, Compartment}\SpecialCharTok{:}\NormalTok{Fungicide, richness) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# selecting columns  filter(Class == "Sordariomycetes") \%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Treatment, Fungicide) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# grouping by treatment and fungicide to later calculate summary stats by group}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Mean =} \FunctionTok{mean}\NormalTok{(richness)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# calculates the mean per Treatment and Fungicide }
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =}\NormalTok{ Fungicide, }\AttributeTok{values\_from =}\NormalTok{ Mean) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# pivot to wide format}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{diff.fungicide =}\NormalTok{ C }\SpecialCharTok{{-}}\NormalTok{ F) }\SpecialCharTok{\%\textgreater{}\%}  \CommentTok{\# calculate the difference between the means. }
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Treatment, }\AttributeTok{y =}\NormalTok{ diff.fungicide)) }\SpecialCharTok{+} \CommentTok{\# Plot it }
+  \FunctionTok{geom\_col}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Difference in average species richness"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'Treatment'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DataWrangling_files/figure-latex/unnamed-chunk-15-1.pdf}}
+
+\end{document}
