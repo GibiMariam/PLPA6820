@@ -1,0 +1,259 @@
+---
+title: "Untitled"
+author: "Gibi Thomas"
+date: "2026-03-19"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+ 
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+#install.packages("drc")
+library(drc)
+```
+
+
+
+$$
+(ºF - 32) * \frac{5}{9}
+$$
+
+```{r, eval=F}
+(5*(degree_f - 32)/9)
+```
+
+
+```{r}
+# (5*(32 - 32)/9)
+(5*(32 - 32)/9)
+```
+
+ 
+```{r}
+# (5*(80 - 32)/9)
+(5*(80 - 32)/9)
+```
+
+
+
+```{r}
+F_to_C <- function(fahrenheit_temp){
+  celsius <- (5*(fahrenheit_temp - 32)/9)
+  return(celsius)
+}
+
+# these do the same thing
+F_to_C(32)
+```
+
+
+```{r, eval=F}
+sample.function <- function(... variable goes here ...){
+  .... code goes here.... 
+  return(... output ...)
+}
+```
+
+
+```{r}
+rep("A", 3) # repeats A three times 
+rep(c("A", "B"), 5) # repeats A and B, times 
+rep(c(1,2,3,4), times = 4) # repeats 1,2,3,4, 4 times 
+rep(c(1,2,5,2), times = 4, each = 4) # repeats 1 four times, 2 four times, 5 four times, and 2 four times. 
+```
+
+
+```{r}
+seq(from = 1, to = 7) # sequence of numbers 1 to 7
+seq(from = 0, to = 10, by = 2) # sequence of numbers from 0 to 10 by 2s 
+
+# combined seq() and rep()
+rep(seq(from = 0, to = 10, by = 2), times = 3, each = 2)
+```
+
+
+```{r}
+# use the built in LETTERS vector for an example. 
+LETTERS
+seq_along(LETTERS[1:5]) # will return 1,2,3,4,5 not the actual letters. 
+```
+
+
+
+Lets see a very basic example of how a for loop works
+```{r}
+for (i in 1:10) {
+print(i*2)  
+}
+```
+
+```{r}
+# read in the data
+EC50.data <- read.csv("C:/Users/My PC/OneDrive/문서/PLPA6820/EC50_all.csv")
+```
+
+
+```{r}
+isolate1 <- drm(100 * EC50.data$relgrowth[EC50.data$is == "ILSO_5-41c"] ~ 
+        EC50.data$conc[EC50.data$is == "ILSO_5-41c"], 
+                       fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                  names = c("Slope", "Lower", "Upper", "EC50")), 
+                       na.action = na.omit)
+    # outputs the summary of the paramters including the estimate, standard
+    # error, t-value, and p-value outputs it into a data frame called
+    # summary.mef.fit for 'summary of fit'
+    summary.fit <- data.frame(summary(isolate1)[[3]])
+    # outputs the summary of just the EC50 data including the estimate, standard
+    # error, upper and lower bounds of the 95% confidence intervals around the
+    # EC50
+    EC50 <- ED(isolate1, respLev = c(50), type = "relative", 
+        interval = "delta")[[1]]
+    EC50
+```
+
+
+```{r}
+nm <- unique(EC50.data$is)
+```
+
+
+```{r}
+for (i in seq_along(nm)) {
+  isolate1 <- drm(100 * EC50.data$relgrowth[EC50.data$is == nm[[i]]] ~ 
+        EC50.data$conc[EC50.data$is == nm[[i]]], 
+                       fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                  names = c("Slope", "Lower", "Upper", "EC50")), 
+                       na.action = na.omit)
+    # outputs the summary of the paramters including the estimate, standard
+    # error, t-value, and p-value outputs it into a data frame called
+    # summary.mef.fit for 'summary of fit'
+    summary.fit <- data.frame(summary(isolate1)[[3]])
+    # outputs the summary of just the EC50 data including the estimate, standard
+    # error, upper and lower bounds of the 95% confidence intervals around the
+    # EC50
+    EC50 <- ED(isolate1, respLev = c(50), type = "relative", 
+        interval = "delta")[[1]]
+    EC50
+}
+
+```
+
+
+```{r}
+EC50.ll4 <- NULL # create a null object 
+for (i in seq_along(nm)) {
+  isolate1 <- drm(100 * EC50.data$relgrowth[EC50.data$is == nm[[i]]] ~ 
+        EC50.data$conc[EC50.data$is == nm[[i]]], 
+                       fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                  names = c("Slope", "Lower", "Upper", "EC50")), 
+                       na.action = na.omit)
+    # outputs the summary of the paramters including the estimate, standard
+    # error, t-value, and p-value outputs it into a data frame called
+    # summary.mef.fit for 'summary of fit'
+    summary.fit <- data.frame(summary(isolate1)[[3]])
+    # outputs the summary of just the EC50 data including the estimate, standard
+    # error, upper and lower bounds of the 95% confidence intervals around the
+    # EC50
+    EC50 <- ED(isolate1, respLev = c(50), type = "relative", 
+        interval = "delta")[[1]]
+    EC50
+    isolate.ec_i <- data.frame(nm[[i]], EC50) # create a one row dataframe containing just the isolate name and the EC50
+    colnames(isolate.ec_i) <- c("Isolate", "EC50") # change the column names
+    
+    # Then we need to append our one row dataframe to our null dataframe we created before
+    # and save it as EC50.ll4. 
+    EC50.ll4 <- rbind.data.frame(EC50.ll4, isolate.ec_i)
+}
+```
+ 
+
+```{r}
+ggplot(EC50.ll4, aes(x = EC50)) +
+  geom_histogram() +
+  theme_classic() 
+```
+
+
+```{r}
+EC50.data %>%
+  group_by(is) %>%
+  nest() %>%
+  mutate(ll.4.mod = map(data, ~drm(.$relgrowth ~ .$conc, 
+                              fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                         names = c("Slope", "Lower", "Upper", "EC50"))))) %>%
+  mutate(ec50 = map(ll.4.mod, ~ED(., 
+                              respLev = c(50), 
+                              type = "relative",
+                              interval = "delta")[[1]])) %>%
+  unnest(ec50)
+```
+
+
+```{r}
+EC50.data %>%
+  group_by(is)
+```
+
+
+```{r}
+EC50.data %>%
+  group_by(is) %>%
+  nest()
+```
+
+
+```{r}
+EC50.data %>%
+  group_by(is) %>%
+  nest() %>%
+  mutate(ll.4.mod = map(data, ~drm(.$relgrowth ~ .$conc, 
+                              fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                         names = c("Slope", "Lower", "Upper", "EC50")))))
+```
+
+
+```{r}
+EC50.data %>%
+  group_by(is) %>%
+  nest() %>%
+  mutate(ll.4.mod = map(data, ~drm(.$relgrowth ~ .$conc, 
+                              fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                         names = c("Slope", "Lower", "Upper", "EC50"))))) %>%
+  mutate(ec50 = map(ll.4.mod, ~ED(., 
+                              respLev = c(50), 
+                              type = "relative",
+                              interval = "delta")[[1]]))
+```
+
+ 
+```{r}
+EC50.data %>%
+  group_by(is) %>%
+  nest() %>%
+  mutate(ll.4.mod = map(data, ~drm(.$relgrowth ~ .$conc, 
+                              fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                         names = c("Slope", "Lower", "Upper", "EC50"))))) %>%
+  mutate(ec50 = map(ll.4.mod, ~ED(., 
+                              respLev = c(50), 
+                              type = "relative",
+                              interval = "delta")[[1]])) %>%
+  unnest(ec50)
+```
+
+
+
+
+
+
+
+
