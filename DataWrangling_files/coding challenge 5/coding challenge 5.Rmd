@@ -6,7 +6,6 @@ output:
   word_document: default
   html_document: default
 ---
-https://github.com/GibiMariam/PLPA6820/tree/1c4092dfab7426adf510e3f7ea33e77cf9cb7340/DataWrangling_files/coding%20challenge%205 
 
 ```{r}
 library(tidyverse)
@@ -76,22 +75,25 @@ i.	This might be challenging, so I’ll give you a break. The code is below.pivo
 d.	Create the plot: Use ggplot and geom_line() with ‘Time_Point’ on the x-axis, the column ‘values’ on the y-axis, and different colors for each ‘diff’ category. The column named ‘values’ come from the pivot_longer. The resulting plot should look like the one to the right. 
 ```{r}
 library(ggplot2)
-alpha_plot <- alpha_average2 %>%
-  select(Time_Point, diff.cotton.even, diff.soybean.even) %>%
-  pivot_longer(
-    cols = c(diff.cotton.even, diff.soybean.even),
-    names_to = "diff",
-    values_to = "value")
 
-ggplot(alpha_plot, aes(x = Time_Point, y = value, color = diff, group = diff)) +
-  geom_line(size = 1.2) +
-  geom_point(size = 3) +
+# Ensure differences are positive
+alpha_average2 <- alpha_average2 %>%
+  mutate(
+    diff.cotton.even = abs(Cotton - Soil),
+    diff.soybean.even = abs(Soybean - Soil)
+  )
+
+alpha_average2 %>%
+  select(Time_Point, diff.cotton.even, diff.soybean.even) %>%
+  pivot_longer(c(diff.cotton.even, diff.soybean.even), names_to = "diff") %>%
+  ggplot(aes(x = Time_Point, y = value, color = diff)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  theme_classic() +
   labs(
-    x = "Time Point",
-    y = "Difference in Evenness",
-    color = "Crop Difference") +
-  theme_minimal(base_size = 14) +
-  theme(legend.position = "top",
-    axis.text.x = element_text(angle = 45, hjust = 1))
+    x = "Time (hrs)",
+    y = "Difference from soil in Pielou's evenness",
+    color = "Difference"
+  )
 ```
 
