@@ -1,0 +1,97 @@
+---
+title: "Coding Challenge 5"
+author: "Gibi Thomas"
+date: "2026-03-19"
+output:
+  word_document: default
+  html_document: default
+---
+
+
+```{r}
+library(tidyverse)
+```
+1. Download two .csv files from Canvas called DiversityData.csv and Metadata.csv, and read them into R using relative file paths.
+
+```{r}
+getwd()
+diversity.data <- read.csv("DiversityData.csv")
+str(diversity.data)
+Metadata.data <- read.csv("Metadata.csv")
+str(Metadata.data)
+```
+2. Join the two dataframes together by the common column ‘Code’. Name the resulting dataframe alpha.
+
+```{r}
+alpha <- merge(diversity.data, Metadata.data, by = "Code")
+alpha
+```
+
+3. Calculate Pielou’s evenness index: Pielou’s evenness is an ecological parameter calculated by the Shannon diversity index (column Shannon) divided by the log of the richness column. 
+a.	Using mutate, create a new column to calculate Pielou’s evenness index. 
+b.	Name the resulting dataframe alpha_even.
+```{r paged.print=FALSE}
+library(dplyr)
+alpha_even <- alpha %>%
+  mutate(Pielou_evenness = shannon / log(richness)) 
+alpha_even
+```
+
+4. Using tidyverse language of functions and the pipe, use the summarise function and tell me the mean and standard error evenness grouped by crop over time.
+a.	Start with the alpha_even dataframe
+b.	Group the data: group the data by Crop and Time_Point.
+c.	Summarize the data: Calculate the mean, count, standard deviation, and standard error for the even variable within each group.
+d.	Name the resulting dataframe alpha_average
+
+```{r echo=TRUE}
+alpha_average <- alpha_even %>%
+  group_by(Crop, Time_Point) %>%
+  summarise(
+    mean_even = mean(Pielou_evenness, na.rm = TRUE),
+    n = n(),
+    sd_even = sd(Pielou_evenness, na.rm = TRUE),
+    se_even = sd_even / sqrt(n),
+    .groups = "drop")
+alpha_average
+```
+
+5. Calculate the difference between the soybean column, the soil column, and the difference between the cotton column and the soil column
+a.	Start with the alpha_average dataframe
+b.	Select relevant columns: select the columns Time_Point, Crop, and mean.even.
+c.	Reshape the data: Use the pivot_wider function to transform the data from long to wide format, creating new columns for each Crop with values from mean.even.
+d.	Calculate differences: Create new columns named diff.cotton.even and diff.soybean.even by calculating the difference between Soil and Cotton, and Soil and Soybean, respectively.
+e.	Name the resulting dataframe alpha_average2
+```{r}
+alpha_average2 <- alpha_average %>%
+  select(Time_Point, Crop, mean_even) %>%
+  pivot_wider(names_from = Crop, values_from = mean_even) %>%
+  mutate(diff.cotton.even = Cotton - Soil, diff.soybean.even = Soybean - Soil)
+alpha_average2
+```
+6. Connecting it to plots
+a.	Start with the alpha_average2 dataframe
+b.	Select relevant columns: select the columns Time_Point, diff.cotton.even, and diff.soybean.even.
+c.	Reshape the data: Use the pivot_longer function to transform the data from wide to long format, creating a new column named diff that contains the values from diff.cotton.even and diff.soybean.even.
+i.	This might be challenging, so I’ll give you a break. The code is below.pivot_longer(c(diff.cotton.even, diff.soybean.even), names_to = "diff")
+d.	Create the plot: Use ggplot and geom_line() with ‘Time_Point’ on the x-axis, the column ‘values’ on the y-axis, and different colors for each ‘diff’ category. The column named ‘values’ come from the pivot_longer. The resulting plot should look like the one to the right. 
+```{r}
+library(ggplot2)
+alpha_plot <- alpha_average2 %>%
+  select(Time_Point, diff.cotton.even, diff.soybean.even) %>%
+  pivot_longer(
+    cols = c(diff.cotton.even, diff.soybean.even),
+    names_to = "diff",
+    values_to = "value")
+
+ggplot(alpha_plot, aes(x = Time_Point, y = value, color = diff, group = diff)) +
+  geom_line(size = 1.2) +
+  geom_point(size = 3) +
+  labs(
+    x = "Time Point",
+    y = "Difference in Evenness",
+    color = "Crop Difference") +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "top",
+    axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
