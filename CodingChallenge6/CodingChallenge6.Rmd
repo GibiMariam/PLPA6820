@@ -1,0 +1,132 @@
+---
+title: "Coding Challenge 6"
+author: "Gibi Thomas"
+date: "2026-03-19"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. Regarding reproducibility, what is the main point of writing your own functions and iterations?
+
+Functions are like those written into packages. They are useful when you need to perform the same code on different data and you want to avoid copy and paste errors.
+Iterations helps reduce copy and paste errors for something that we would like to do over and over again. It is also helpful for sanity checks through data simulation.
+
+2. In your own words, describe: 1) how to write a function in R, and 2) how to write a for loop in R. In your answer, be specific about: basic syntax, where the code is written, and how results are returned or stored.
+
+First we start by naming the function with the backward arrow. After opening a new function we type the curly brackets. We will type the code we want to perform within the curly brackets.Inside the parentheses after function is where we put our variables separated by commas.
+
+The for loop is classic coding. To write a for loop in R, you use the for keyword followed by parentheses containing a loop variable and a sequence to iterate over, and then curly brackets {} containing the code to be executed during each iteration. 
+
+```{r cars}
+Cities.data <- read.csv("Cities.csv")
+Cities.data
+```
+```{r}
+haversine_distance <- function(lat1, lon1, lat2, lon2) {
+  
+  # convert to radians
+  rad.lat1 <- lat1 * pi/180
+  rad.lon1 <- lon1 * pi/180
+  rad.lat2 <- lat2 * pi/180
+  rad.lon2 <- lon2 * pi/180
+  
+  # Haversine formula
+  delta_lat <- rad.lat2 - rad.lat1
+  delta_lon <- rad.lon2 - rad.lon1
+  a <- sin(delta_lat / 2)^2 + cos(rad.lat1) * cos(rad.lat2) * sin(delta_lon / 2)^2
+  c <- 2 * asin(sqrt(a)) 
+  
+  # Earth's radius in kilometers
+  earth_radius <- 6378137
+  
+  # Calculate the distance
+  distance_km <- (earth_radius * c)/1000
+  
+  return(distance_km)
+}
+haversine_distance 
+```
+5. Using your function from question 4, calculate the distance between Auburn, AL and New York City.
+a.	Subset or extract only the latitude and longitude values needed from Cities.csv
+b.	Pass those values into your function
+c.	Store the result in an object
+
+The expected output is 1367.854 km (small rounding differences are acceptable).
+```{r}
+library(dplyr)
+auburn <- Cities.data %>%
+  filter(city == "Auburn" & state_id == "AL")
+
+nyc <- Cities.data %>%
+  filter(city == "New York" & state_id == "NY")
+auburn
+nyc
+```
+6. Use your distance function inside a for loop to calculate the distance between
+Auburn, AL and every other city in Cities.csv. Each iteration should calculate the
+distance for one city. 
+```{r}
+library(dplyr)
+auburn <- Cities.data %>%
+  dplyr::filter(city == "Auburn" & state_id == "AL")
+
+auburn_lat <- auburn$lat
+auburn_lon <- auburn$long
+
+distances <- numeric(nrow(Cities.data))
+
+for (i in 1:nrow(Cities.data)) {
+  distances[i] <- haversine_distance(
+    auburn_lat,
+    auburn_lon,
+    Cities.data$lat[i],
+    Cities.data$long[i])}
+
+Cities.data$distance_from_auburn <- distances
+
+distances[1:9]
+```
+7. Modify your loop so that each iteration appends one new row to a dataframe with
+the following columns:
+• City1 (the other city)
+• City2 (Auburn)
+• Distance_km
+```{r}
+
+auburn <- Cities.data[Cities.data$city == "Auburn" & 
+                      Cities.data$state_id == "AL", ]
+
+auburn_lat <- auburn$lat
+auburn_lon <- auburn$long
+
+
+distance_df <- data.frame(
+  City1 = character(),
+  City2 = character(),
+  Distance_km = numeric(),
+  stringsAsFactors = FALSE)
+
+for (i in 1:nrow(Cities.data)) {
+  
+  dist <- haversine_distance(
+    auburn_lat,
+    auburn_lon,
+    Cities.data$lat[i],
+    Cities.data$long[i]
+  )
+  
+  # Append row
+  distance_df <- rbind(distance_df, data.frame(
+    City1 = Cities.data$city[i],
+    City2 = "Auburn",
+    Distance_km = dist
+  ))}
+
+head(distance_df)
+```
+
