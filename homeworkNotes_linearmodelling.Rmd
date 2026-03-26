@@ -1,0 +1,140 @@
+---
+title: "Untitled"
+author: "Gibi Thomas"
+date: "2026-03-26"
+output:
+  word_document: default
+  html_document: default
+---
+
+install.packages("multcompView", repos = "https://cloud.r-project.org")
+install.packages("emmeans", repos = "https://cloud.r-project.org")
+install.packages("lme4", repos = "https://cloud.r-project.org")
+install.packages("dplyr", repos = "https://cloud.r-project.org")  # if using %>%
+```
+
+```{r}
+library(tidyverse)
+library(lme4)
+library(emmeans)
+library(multcomp)
+
+```
+```{r}
+data("mtcars")
+library(ggplot2)
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_smooth(method = lm, se = FALSE, color = "grey") +
+  geom_point(aes(color = wt)) +
+  xlab("Weight") + 
+  ylab("Miles per gallon") +
+  scale_colour_gradient(low = "forestgreen", high = "black") +
+  theme_classic()
+lm(mpg~wt, data = mtcars)
+summary(lm(mpg~wt, data = mtcars))
+```
+```{r}
+anova(lm(mpg~wt, data = mtcars))
+```
+```{r}
+cor.test(mtcars$wt, mtcars$mpg)
+```
+```{r}
+model <- lm(mpg~wt, data = mtcars)
+
+ggplot(model, aes(y = .resid, x = .fitted)) +
+  geom_point() +
+  geom_hline(yintercept = 0)
+```
+```{r}
+library(dplyr)
+bull.rich <- read.csv("Bull_richness.csv")
+bull.rich %>%
+  filter(GrowthStage == "V8" & Treatment == "Conv.") %>%
+  ggplot(aes(x = Fungicide, y = richness)) + 
+  geom_boxplot()
+```
+```{r}
+bull.rich.sub <- bull.rich %>%
+  filter(GrowthStage == "V8" & Treatment == "Conv.")
+
+t.test(richness~Fungicide, data = bull.rich.sub)
+```
+```{r}
+t.test(richness~Fungicide, data = bull.rich.sub, var.equal = TRUE)
+```
+```{r}
+summary(lm(richness~Fungicide, data = bull.rich.sub))
+```
+```{r}
+anova(lm(richness~Fungicide, data = bull.rich.sub))
+```
+```{r}
+bull.rich.sub2 <- bull.rich %>%
+  filter(Fungicide == "C" & Treatment == "Conv." & Crop == "Corn")
+bull.rich.sub2$GrowthStage <- factor(bull.rich.sub2$GrowthStage, levels = c("V6", "V8", "V15"))
+
+ggplot(bull.rich.sub2, aes(x = GrowthStage, y = richness)) +
+  geom_boxplot()
+lm.growth <- lm(richness ~ GrowthStage, data = bull.rich.sub2)
+```
+
+
+```{r}
+summary(lm.growth)
+```
+```{r}
+anova(lm.growth)
+```
+```{r}
+summary(aov(richness ~ GrowthStage, data = bull.rich.sub2))
+```
+
+```
+
+```{r}
+library(dplyr)
+bull.rich.sub3 <- bull.rich %>%
+  filter(Treatment == "Conv." & Crop == "Corn")
+
+bull.rich.sub3$GrowthStage <- factor(bull.rich.sub3$GrowthStage, levels = c("V6", "V8", "V15"))
+```
+
+```{r}
+lm.inter <- lm(richness ~ GrowthStage + Fungicide + GrowthStage:Fungicide, data = bull.rich.sub3)
+```
+
+```{r}
+summary(lm.inter)
+```
+```{r}
+anova(lm.inter)
+```
+```{r}
+library(dplyr)
+library(ggplot2)
+bull.rich.sub3 %>%
+  ggplot(aes(x = GrowthStage, y = richness, fill = Fungicide)) +
+  geom_boxplot()
+```
+```{r}
+library(emmeans)
+library(multcompView)
+lsmeans <- emmeans(lm.inter, ~Fungicide|GrowthStage) 
+Results_lsmeans <- cld(lsmeans, alpha = 0.05, reversed = TRUE, details = TRUE) 
+Results_lsmeans
+```
+
+```{r}
+library(lme4)
+lme0 <- lm(richness ~ GrowthStage*Fungicide, data = bull.rich.sub3)
+lme1 <- lmer(richness ~ GrowthStage*Fungicide + (1|Rep), data = bull.rich.sub3)
+summary(lme1)
+```
+```{r}
+summary(lme0)
+summary(lme1)
+```
+
+```
+
