@@ -1,0 +1,108 @@
+---
+output:
+  word_document: default
+  html_document: default
+---
+---
+title: "CodingChallenge7"
+author: "Gibi Thomas"
+date: "2026-04-01"
+output: html_document
+
+```{r}
+setwd("C:/Users/My PC/OneDrive/문서/PLPA6820/CodingChallenge7")
+```
+1. Read in the data called “PlantEmergence.csv” using a relative file path and load the following libraries. tidyverse, lme4, emmeans, multcomp, and multcompView. Turn the Treatment , DaysAfterPlanting  and Rep into factors using the function as.factor
+```{r}
+library(tidyverse)
+library(lme4)
+library(emmeans)
+library(multcomp)
+library(multcompView)
+
+PlantEmergence <- read_csv("PlantEmergence.csv")
+
+colnames(PlantEmergence) <- make.names(colnames(PlantEmergence))
+
+# Convert to factors
+PlantEmergence$Treatment <- as.factor(PlantEmergence$Treatment)
+PlantEmergence$DaysAfterPlanting <- as.factor(PlantEmergence$DaysAfterPlanting)
+PlantEmergence$Rep <- as.factor(PlantEmergence$Rep)
+
+str(PlantEmergence)
+```
+2. Fit a linear model to predict Emergence using Treatment and DaysAfterPlanting along with the interaction. Provide the summary of the linear model and ANOVA results. 
+```{r}
+lm_emergence <- lm(Emergence ~ Treatment * DaysAfterPlanting, data = PlantEmergence)
+summary(lm_emergence)
+anova(lm_emergence)
+```
+3. Based on the results of the linear model in question 2, do you need to fit the interaction term? Provide a simplified linear model without the interaction term but still testing both main effects. Provide the summary and ANOVA results. Then, interpret the intercept and the coefficient for Treatment 2.
+```{r}
+# Linear model without interaction
+lm_main <- lm(Emergence ~ Treatment + DaysAfterPlanting, data = PlantEmergence)
+summary(lm_main)
+anova(lm_main)
+```
+The main effects treatment and DaysAfterPlanting are significant. This tells us that the main effect explains the variation well. 
+The intercept 182.163. This is the predicted emergence for treatment 1 at baseline days after planting. 
+the coefficient for treatment 2  is 134.531, this means treatment 2 reduces emergence by 135 plants compared to treatment 1. treatment 2 performs worse than treatment 1 under the same days after planting.
+
+
+4. Calculate the least square means for Treatment using the emmeans package and perform a Tukey separation with the compact letter display using the cld function. Interpret the results.
+```{r}
+# LSMeans for Treatment
+lsmeans_treat <- emmeans(lm_main, ~ Treatment)
+lsmeans_treat
+# Tukey adjustment
+tukey_treat <- emmeans(lm_main, pairwise ~ Treatment, adjust = "tukey")
+tukey_treat$contrasts
+# Compact letter display
+cld_treat <- cld(lsmeans_treat, Letters = letters, adjust = "tukey")
+cld_treat
+```
+
+The treatment 2 is significantly higher than all other treatments while the lowest value was observed for treatment 1. 
+
+5. The provided function lets you dynamically add a linear model plus one factor from that model and plots a bar chart with letters denoting treatment differences. Use this model to generate the plot shown below. Explain the significance of the letters. 
+
+```{r}
+plot_cldbars_onefactor <- function(lm_model, factor) {
+  data <- lm_model$model
+  variables <- colnames(lm_model$model)
+  dependent_var <- variables[1]
+  independent_var <- variables[2:length(variables)]
+
+  lsmeans <- emmeans(lm_model, as.formula(paste("~", factor))) # estimate lsmeans 
+  Results_lsmeans <- cld(lsmeans, alpha = 0.05, reversed = TRUE, details = TRUE, Letters = letters) # contrast with Tukey adjustment by default.
+  
+  # Extracting the letters for the bars
+  sig.diff.letters <- data.frame(Results_lsmeans$emmeans[,1], 
+                                 str_trim(Results_lsmeans$emmeans[,7]))
+  colnames(sig.diff.letters) <- c(factor, "Letters")
+  
+  # for plotting with letters from significance test
+  ave_stand2 <- lm_model$model %>%
+    group_by(!!sym(factor)) %>%
+    dplyr::summarize(
+      ave.emerge = mean(.data[[dependent_var]], na.rm = TRUE),
+      se = sd(.data[[dependent_var]]) / sqrt(n())
+    ) %>%
+    left_join(sig.diff.letters, by = factor) %>%
+    mutate(letter_position = ave.emerge + 10 * se)
+  
+  plot <- ggplot(data, aes(x = !! sym(factor), y = !! sym(dependent_var))) + 
+    stat_summary(fun = mean, geom = "bar") +
+    stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.5) +
+    ylab("Number of emerged plants") + 
+    geom_jitter(width = 0.02, alpha = 0.5) +
+    geom_text(data = ave_stand2, aes(label = Letters, y = letter_position), size = 5) +
+    xlab(as.character(factor)) +
+    theme_classic()
+  
+  return(plot)
+}
+```
+Treatment 2 produced the lowest emergence and is significantly lower than all other treatments, indicating poor performance. Treatment 7 had moderate emergence, significantly lower than the top-performing treatments but higher than Treatment 2. The remaining treatments (1, 3–6, 8, and 9) exhibited high and comparable emergence, showing no significant differences among them. This illustrates that most treatments are equally effective, with a few exceptions showing reduced plant emergence.
+
+
