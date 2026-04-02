@@ -1,11 +1,12 @@
 ---
 output:
-  word_document: default
+  word_document:
+  md_document:
+    variant: gfm
   html_document: default
 editor_options: 
-  chunk_output_type: inline
+  chunk_output_type: console
 ---
-
 ------------------------------------------------------------------------
 
 title: "CodingChallenge7" author: "Gibi Thomas" date: "2026-04-01" output: html_document
