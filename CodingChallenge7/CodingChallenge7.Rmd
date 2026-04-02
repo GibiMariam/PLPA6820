@@ -106,8 +106,10 @@ plot_cldbars_onefactor <- function(lm_model, factor) {
     xlab(as.character(factor)) +
     theme_classic()
   
-  plot
+  print(plot)
 }
+
+plot_cldbars_onefactor(lm_main, "Treatment")
 ```
 
 Treatment 2 produced the lowest emergence and is significantly lower than all other treatments, indicating poor performance. Treatment 7 had moderate emergence, significantly lower than the top-performing treatments but higher than Treatment 2. The remaining treatments (1, 3–6, 8, and 9) exhibited high and comparable emergence, showing no significant differences among them. This illustrates that most treatments are equally effective, with a few exceptions showing reduced plant emergence.
